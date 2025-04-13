@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fehuna Fitness - Loja de Suplementos</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
 
-  <!-- Ícones do Font Awesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <!-- Ícones (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     * {
@@ -20,8 +20,8 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: #f5f5f5;
-      color: #333;
+      background: #1a1a1a;
+      color: #fff;
     }
 
     .header {
@@ -41,11 +41,12 @@
     .header h1 {
       font-size: 28px;
       font-weight: 600;
+      color: #f90;
     }
 
     .info-bar {
-      background-color: #27ae60;
-      color: white;
+      background-color: #f90;
+      color: black;
       text-align: center;
       padding: 10px 15px;
       font-size: 14px;
@@ -55,19 +56,27 @@
       margin-right: 5px;
     }
 
+    .section-title {
+      text-align: center;
+      font-size: 22px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      color: #f90;
+    }
+
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
-      padding: 30px 20px;
+      padding: 20px;
       max-width: 1100px;
       margin: auto;
     }
 
     .product {
-      background: white;
+      background: #2a2a2a;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       overflow: hidden;
       transition: transform 0.2s ease;
       display: flex;
@@ -95,17 +104,18 @@
     .product h2 {
       font-size: 18px;
       margin-bottom: 10px;
-      color: #222;
+      color: #fff;
     }
 
     .product p {
       font-size: 14px;
       margin-bottom: 5px;
+      color: #ccc;
     }
 
     .product .price {
       font-weight: bold;
-      color: #27ae60;
+      color: #f90;
       margin-top: auto;
     }
 
@@ -128,7 +138,6 @@
       margin-right: 6px;
     }
 
-    /* Botão flutuante */
     .whatsapp-float {
       position: fixed;
       bottom: 20px;
@@ -174,8 +183,9 @@
     <i class="fas fa-truck"></i> Frete grátis em Fortaleza e região metropolitana</p>
   </div>
 
+  <!-- CATEGORIA: WHEY -->
+  <h2 class="section-title">🥤 Whey Protein</h2>
   <div class="product-grid">
-    <!-- PRODUTO 1 -->
     <div class="product">
       <img src="https://via.placeholder.com/300x200.png?text=Whey+Protein" alt="Whey Protein">
       <div class="product-content">
@@ -187,8 +197,11 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
+  </div>
 
-    <!-- PRODUTO 2 -->
+  <!-- CATEGORIA: CREATINAS -->
+  <h2 class="section-title">🧬 Creatinas</h2>
+  <div class="product-grid">
     <div class="product">
       <img src="https://via.placeholder.com/300x200.png?text=Creatina" alt="Creatina">
       <div class="product-content">
@@ -200,7 +213,22 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <!-- ADICIONE MAIS PRODUTOS AQUI -->
+  </div>
+
+  <!-- CATEGORIA: PRÉ-TREINOS -->
+  <h2 class="section-title">💥 Pré-Treinos</h2>
+  <div class="product-grid">
+    <div class="product">
+      <img src="https://via.placeholder.com/300x200.png?text=Pré-Treino" alt="Pré-Treino">
+      <div class="product-content">
+        <h2>Pré-Treino Insano 200g</h2>
+        <p>Energia extrema para seus treinos.</p>
+        <p class="price">R$ 79,90</p>
+      </div>
+      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Insano+200g" target="_blank">
+        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
+      </a>
+    </div>
   </div>
 
   <!-- BOTÃO FLUTUANTE WHATSAPP -->
