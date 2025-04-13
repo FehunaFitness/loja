@@ -3,42 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loja - Fehuna Fitness</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>Fehuna Fitness - Loja de Suplementos</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Ícones do Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: #f9f9f9;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f5f5;
       color: #333;
     }
+
     .header {
-      text-align: center;
-      padding: 30px 20px 20px;
       background-color: #000;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
     }
+
     .header img {
-      width: 70px;
-      height: 70px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
+      margin-bottom: 10px;
     }
+
     .header h1 {
       font-size: 28px;
-      margin: 0;
-      font-weight: 700;
+      font-weight: 600;
     }
+
     .info-bar {
-      background-color: #222;
-      padding: 10px;
+      background-color: #27ae60;
+      color: white;
       text-align: center;
+      padding: 10px 15px;
       font-size: 14px;
-      color: #ddd;
     }
+
+    .info-bar i {
+      margin-right: 5px;
+    }
+
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -47,128 +63,150 @@
       max-width: 1100px;
       margin: auto;
     }
+
     .product {
-      background: #fff;
-      border-radius: 16px;
+      background: white;
+      border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       overflow: hidden;
+      transition: transform 0.2s ease;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease;
     }
+
     .product:hover {
       transform: translateY(-5px);
     }
+
     .product img {
       width: 100%;
-      height: 220px;
+      height: 200px;
       object-fit: cover;
     }
+
     .product-content {
       padding: 15px;
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
+
     .product h2 {
-      margin: 0 0 10px;
       font-size: 18px;
-      font-weight: 600;
+      margin-bottom: 10px;
+      color: #222;
     }
+
     .product p {
       font-size: 14px;
-      margin: 5px 0;
+      margin-bottom: 5px;
     }
+
     .product .price {
       font-weight: bold;
       color: #27ae60;
-      margin-bottom: 10px;
+      margin-top: auto;
     }
+
     .whatsapp-button {
       background-color: #25D366;
       color: white;
-      border: none;
-      padding: 12px;
       text-align: center;
-      cursor: pointer;
-      font-size: 16px;
-      margin: 0 15px 15px;
-      border-radius: 8px;
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 0 0 12px 12px;
       text-decoration: none;
-      font-weight: 600;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
+      transition: background 0.3s;
     }
+
     .whatsapp-button:hover {
       background-color: #1ebe5b;
     }
-    .whatsapp-button::before {
-      content: "\f232";
-      font-family: FontAwesome;
-      display: inline-block;
-      font-style: normal;
+
+    .whatsapp-button i {
+      margin-right: 6px;
     }
-    .floating-whatsapp {
+
+    /* Botão flutuante */
+    .whatsapp-float {
       position: fixed;
       bottom: 20px;
       right: 20px;
       background-color: #25D366;
       color: white;
-      padding: 16px;
       border-radius: 50%;
-      font-size: 24px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      text-decoration: none;
-      z-index: 1000;
+      width: 55px;
+      height: 55px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      transition: background 0.3s;
     }
-    .floating-whatsapp:hover {
+
+    .whatsapp-float:hover {
       background-color: #1ebe5b;
     }
-    @media (max-width: 480px) {
+
+    .whatsapp-float i {
+      font-size: 24px;
+    }
+
+    @media (max-width: 500px) {
       .header h1 {
         font-size: 22px;
       }
     }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+
   <div class="header">
-    <img src="https://i.ibb.co/4zZRM4W/1577cfa9-10de-451a-9a05-43e14c8d1bc7-removebg-preview-YKb3vq-REwa-UZkv-Mj.jpg" alt="Logo da Loja">
+    <img src="https://i.ibb.co/4zZRM4W/1577cfa9-10de-451a-9a05-43e14c8d1bc7-removebg-preview-YKb3vq-REwa-UZkv-Mj.jpg" alt="Logo Fehuna Fitness">
     <h1>Fehuna Fitness</h1>
   </div>
 
   <div class="info-bar">
-    📧 fehunasuplementos@gmail.com | 🕐 Atendimento: 8h às 19h (todos os dias) | 🚚 Frete grátis para Fortaleza e região metropolitana
+    <p><i class="fas fa-envelope"></i> fehunasuplementos@gmail.com &nbsp; | &nbsp; 
+    <i class="fas fa-clock"></i> Todos os dias, das 8h às 19h &nbsp; | &nbsp; 
+    <i class="fas fa-truck"></i> Frete grátis em Fortaleza e região metropolitana</p>
   </div>
 
   <div class="product-grid">
+    <!-- PRODUTO 1 -->
     <div class="product">
-      <img src="https://via.placeholder.com/300x220.png?text=Whey+Protein" alt="Whey Protein">
+      <img src="https://via.placeholder.com/300x200.png?text=Whey+Protein" alt="Whey Protein">
       <div class="product-content">
         <h2>Whey Protein Max 1kg</h2>
-        <p class="price">R$ 99,90</p>
         <p>Sabor Chocolate, alta absorção.</p>
+        <p class="price">R$ 99,90</p>
       </div>
       <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Whey+Protein+Max+1kg+-+Sabor+Chocolate" target="_blank">
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
 
+    <!-- PRODUTO 2 -->
     <div class="product">
-      <img src="https://via.placeholder.com/300x220.png?text=Creatina" alt="Creatina">
+      <img src="https://via.placeholder.com/300x200.png?text=Creatina" alt="Creatina">
       <div class="product-content">
         <h2>Creatina Monohidratada 300g</h2>
-        <p class="price">R$ 59,90</p>
         <p>Explosão muscular e força.</p>
+        <p class="price">R$ 59,90</p>
       </div>
       <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+300g" target="_blank">
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
+    <!-- ADICIONE MAIS PRODUTOS AQUI -->
   </div>
 
-  <a class="floating-whatsapp" href="https://wa.me/5585999704254" target="_blank"><i class="fab fa-whatsapp"></i></a>
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <a href="https://wa.me/5585999704254" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
 </body>
 </html>
