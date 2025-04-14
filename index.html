@@ -28,6 +28,42 @@
       overflow-x: hidden;
     }
 
+    /* Loader */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      transition: opacity 0.5s;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f90;
+      border-top: 4px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     /* Navbar */
     .navbar {
       position: fixed;
@@ -98,11 +134,38 @@
       color: #f90;
     }
 
+    /* Filters */
+    .filters {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filters button {
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid #f90;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .filters button.active,
+    .filters button:hover {
+      background: #f90;
+      color: #000;
+    }
+
     /* Hero Section */
     .hero {
       height: 500px;
       background: url('https://images.unsplash.com/photo-1517836357463-d25dfead9741?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-      background-attachment: fixed; /* Efeito Parallax */
+      background-attachment: fixed;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -145,7 +208,7 @@
       color: white;
       text-align: center;
       padding: 30px 20px;
-      margin-top: 80px; /* Ajuste para navbar fixa */
+      margin-top: 80px;
     }
 
     .header img {
@@ -179,13 +242,13 @@
     .carousel {
       max-width: 1200px;
       margin: 40px auto;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
     }
 
     .carousel-container {
       display: flex;
-      animation: slide 20s infinite;
+      transition: transform 0.5s ease;
     }
 
     .carousel-item {
@@ -193,11 +256,27 @@
       padding: 10px;
     }
 
-    @keyframes slide {
-      0%, 20% { transform: translateX(0); }
-      25%, 45% { transform: translateX(-33.33%); }
-      50%, 70% { transform: translateX(-66.66%); }
-      75%, 100% { transform: translateX(0); }
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .carousel-controls button {
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: #f90;
+      font-size: 24px;
+      padding: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .carousel-controls button:hover {
+      background: rgba(0, 0, 0, 0.8);
     }
 
     /* Section Title */
@@ -295,13 +374,25 @@
       font-size: 14px;
     }
 
-    /* Badge */
+    /* Badges */
     .product .badge {
       position: absolute;
       top: 10px;
       left: 10px;
       background: #f90;
       color: #000;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .product .stock-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4444;
+      color: #fff;
       padding: 5px 10px;
       border-radius: 12px;
       font-size: 12px;
@@ -318,6 +409,8 @@
       border-radius: 0 0 12px 12px;
       text-decoration: none;
       transition: background 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
     }
 
     .whatsapp-button:hover {
@@ -327,6 +420,24 @@
 
     .whatsapp-button i {
       margin-right: 6px;
+    }
+
+    .whatsapp-button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s;
+    }
+
+    .whatsapp-button:active::after {
+      width: 200px;
+      height: 200px;
     }
 
     /* WhatsApp Float */
@@ -388,6 +499,61 @@
 
     .back-to-top i {
       font-size: 24px;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+      background: #2a2a2a;
+      border-radius: 12px;
+    }
+
+    .newsletter h2 {
+      font-size: 24px;
+      color: #f90;
+      margin-bottom: 10px;
+    }
+
+    .newsletter p {
+      font-size: 14px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .newsletter form {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .newsletter input {
+      padding: 10px;
+      border: none;
+      border-radius: 25px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 14px;
+      flex: 1;
+    }
+
+    .newsletter button {
+      background: #f90;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .newsletter button:hover {
+      background: #e68a00;
     }
 
     /* Footer */
@@ -454,6 +620,15 @@
       .carousel-item {
         flex: 0 0 50%;
       }
+
+      .newsletter form {
+        flex-direction: column;
+      }
+
+      .newsletter input,
+      .newsletter button {
+        width: 100%;
+      }
     }
 
     @media (max-width: 500px) {
@@ -480,6 +655,8 @@
   </style>
 </head>
 <body>
+  <!-- Loader -->
+  <div class="loader"></div>
 
   <!-- Navbar -->
   <nav class="navbar">
@@ -506,14 +683,24 @@
     <i class="fas fa-search"></i>
   </div>
 
+  <!-- Filters -->
+  <div class="filters">
+    <button data-filter="all" class="active">Todos</button>
+    <button data-filter="whey">Whey Protein</button>
+    <button data-filter="creatina">Creatina</button>
+    <button data-filter="pre-treino">Pré-Treino</button>
+    <button data-filter="low-price">Até R$100</button>
+    <button data-filter="high-price">Acima de R$100</button>
+  </div>
+
   <!-- Carousel -->
   <section class="carousel">
     <h2 class="section-title">Produtos em Destaque</h2>
-    <div class="carousel-container">
+    <div class="carousel-container" id="carousel">
       <div class="carousel-item">
         <div class="product">
           <span class="badge">Mais Vendido</span>
-          <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Growth" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Growth" loading="lazy">
           <div class="product-content">
             <h2>Whey Protein Growth 900g</h2>
             <p>Sabor Chocolate, 23g de proteína.</p>
@@ -527,7 +714,8 @@
       <div class="carousel-item">
         <div class="product">
           <span class="badge">Promoção</span>
-          <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina BlackSkull" loading="lazy">
+          <span class="stock-badge">Baixo Estoque</span>
+          <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina BlackSkull" loading="lazy">
           <div class="product-content">
             <h2>Creatina BlackSkull 300g</h2>
             <p>Energia explosiva para hipertrofia.</p>
@@ -540,7 +728,7 @@
       </div>
       <div class="carousel-item">
         <div class="product">
-          <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino DUX" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino DUX" loading="lazy">
           <div class="product-content">
             <h2>Pré-Treino Insanity DUX 200g</h2>
             <p>Sabor Limão, explosão de energia.</p>
@@ -551,6 +739,10 @@
           </a>
         </div>
       </div>
+    </div>
+    <div class="carousel-controls">
+      <button onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+      <button onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
     </div>
   </section>
 
@@ -570,9 +762,10 @@
   <!-- CATEGORIA: WHEY -->
   <h2 class="section-title" id="whey">🥤 Whey Protein</h2>
   <div class="product-grid">
-    <div class="product">
+    <div class="product" data-category="whey" data-price="89.90">
       <span class="badge">Mais Vendido</span>
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Concentrado Growth 900g" loading="lazy">
+      <span class="stock-badge">Baixo Estoque</span>
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Concentrado Growth 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein Concentrado Growth 900g</h2>
         <p>Sabor Chocolate, 23g de proteína por dose.</p>
@@ -582,8 +775,8 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Concentrado DUX 900g" loading="lazy">
+    <div class="product" data-category="whey" data-price="148.88">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Concentrado DUX 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein Concentrado DUX 900g</h2>
         <p>Sabor Chocolate, alta qualidade e pureza.</p>
@@ -593,8 +786,8 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a登場543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein 3HD BlackSkull 900g" loading="lazy">
+    <div class="product" data-category="whey" data-price="109.90">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein 3HD BlackSkull 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein 3HD BlackSkull 900g</h2>
         <p>Sabor Chocolate, blend 3W para hipertrofia.</p>
@@ -604,8 +797,8 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cacao Whey Essential 900g" loading="lazy">
+    <div class="product" data-category="whey" data-price="199.90">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Cacao Whey Essential 900g" loading="lazy">
       <div class="product-content">
         <h2>Cacao Whey Essential 900g</h2>
         <p>Sabor Cacau, adoçado com estévia.</p>
@@ -615,9 +808,9 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
+    <div class="product" data-category="whey" data-price="99.90">
       <span class="badge">Promoção</span>
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Max Titanium 900g" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Max Titanium 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein Max Titanium 900g</h2>
         <p>Sabor Chocolate, 20g de proteína por dose.</p>
@@ -632,8 +825,8 @@
   <!-- CATEGORIA: CREATINAS -->
   <h2 class="section-title" id="creatinas">🧬 Creatinas</h2>
   <div class="product-grid">
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada Growth 300g" loading="lazy">
+    <div class="product" data-category="creatina" data-price="69.90">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada Growth 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada Growth 300g</h2>
         <p>Máxima pureza, força e resistência.</p>
@@ -643,8 +836,8 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada DUX 300g" loading="lazy">
+    <div class="product" data-category="creatina" data-price="89.90">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada DUX 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada DUX 300g</h2>
         <p>Alta performance para treinos intensos.</p>
@@ -654,9 +847,9 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
+    <div class="product" data-category="creatina" data-price="79.90">
       <span class="badge">Mais Vendido</span>
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada BlackSkull 300g" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada BlackSkull 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada BlackSkull 300g</h2>
         <p>Energia explosiva para hipertrofia.</p>
@@ -666,8 +859,8 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada Essential 300g" loading="lazy">
+    <div class="product" data-category="creatina" data-price="99.90">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada Essential 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada Essential 300g</h2>
         <p>Qualidade premium, sem aditivos.</p>
@@ -677,8 +870,9 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada Max Titanium 300g" loading="lazy">
+    <div class="product" data-category="creatina" data-price="74.90">
+      <span class="stock-badge">Baixo Estoque</span>
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada Max Titanium 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada Max Titanium 300g</h2>
         <p>Suporte para treinos de alta intensidade.</p>
@@ -693,8 +887,8 @@
   <!-- CATEGORIA: PRÉ-TREINOS -->
   <h2 class="section-title" id="pre-treinos">💥 Pré-Treinos</h2>
   <div class="product-grid">
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Growth 200g" loading="lazy">
+    <div class="product" data-category="pre-treino" data-price="59.90">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Growth 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Growth 200g</h2>
         <p>Sabor Limão, energia e foco intensos.</p>
@@ -704,9 +898,9 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
+    <div class="product" data-category="pre-treino" data-price="89.90">
       <span class="badge">Promoção</span>
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Insanity DUX 200g" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Insanity DUX 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Insanity DUX 200g</h2>
         <p>Sabor Limão, explosão de energia.</p>
@@ -716,8 +910,9 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Caveira Preta BlackSkull 200g" loading="lazy">
+    <div class="product" data-category="pre-treino" data-price="79.90">
+      <span class="stock-badge">Baixo Estoque</span>
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Caveira Preta BlackSkull 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Caveira Preta BlackSkull 200g</h2>
         <p>Sabor Limão, potência máxima.</p>
@@ -727,8 +922,8 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Max Titanium 200g" loading="lazy">
+    <div class="product" data-category="pre-treino" data-price="69.90">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Max Titanium 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Max Titanium 200g</h2>
         <p>Sabor Limão, energia para treinos pesados.</p>
@@ -738,8 +933,8 @@
         <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
       </a>
     </div>
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Darkness Integralmedica 200g" loading="lazy">
+    <div class="product" data-category="pre-treino" data-price="74.90">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Darkness Integralmedica 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Darkness Integralmedica 200g</h2>
         <p>Sabor Limão, foco e resistência.</p>
@@ -750,6 +945,16 @@
       </a>
     </div>
   </div>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <h2>Receba Nossas Ofertas!</h2>
+    <p>Cadastre-se para novidades e promoções exclusivas.</p>
+    <form>
+      <input type="email" placeholder="Digite seu e-mail" required>
+      <button type="submit">Inscrever-se</button>
+    </form>
+  </section>
 
   <!-- Footer -->
   <footer class="footer">
@@ -794,6 +999,11 @@
 
   <!-- JavaScript -->
   <script>
+    // Loader
+    window.addEventListener('load', () => {
+      document.querySelector('.loader').classList.add('hidden');
+    });
+
     // Menu Mobile
     const menuToggle = document.querySelector('.menu-toggle');
     const navUl = document.querySelector('.navbar ul');
@@ -811,6 +1021,48 @@
         product.style.display = name.includes(query) ? 'flex' : 'none';
       });
     });
+
+    // Filters
+    const filterButtons = document.querySelectorAll('.filters button');
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        const filter = button.dataset.filter;
+        products.forEach(product => {
+          const category = product.dataset.category;
+          const price = parseFloat(product.dataset.price);
+          if (filter === 'all') {
+            product.style.display = 'flex';
+          } else if (filter === 'low-price' && price <= 100) {
+            product.style.display = 'flex';
+          } else if (filter === 'high-price' && price > 100) {
+            product.style.display = 'flex';
+          } else {
+            product.style.display = category === filter ? 'flex' : 'none';
+          }
+        });
+      });
+    });
+
+    // Carousel Controls
+    let currentSlide = 0;
+    const carousel = document.querySelector('#carousel');
+    const totalSlides = document.querySelectorAll('.carousel-item').length;
+
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${currentSlide * 33.33}%)`;
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    }
 
     // Back to Top
     const backToTop = document.querySelector('.back-to-top');
