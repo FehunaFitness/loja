@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fehuna Fitness - Loja de Suplementos em Fortaleza</title>
+  <meta name="description" content="Fehuna Fitness - Loja de suplementos alimentares com Whey Protein, Creatina e Pré-Treinos das melhores marcas. Frete grátis em Fortaleza!">
+  <meta name="keywords" content="suplementos, whey protein, creatina, pré-treino, fitness, Fortaleza">
+  <meta name="author" content="Fehuna Fitness">
+  <title>Fehuna Fitness - Loja de Suplementos</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
@@ -65,10 +68,41 @@
       color: #f90;
     }
 
+    /* Search Bar */
+    .search-bar {
+      position: relative;
+      margin: 15px auto;
+      max-width: 600px;
+      padding: 0 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 40px 10px 15px;
+      border-radius: 25px;
+      border: none;
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .search-bar input::placeholder {
+      color: #aaa;
+    }
+
+    .search-bar i {
+      position: absolute;
+      right: 35px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #f90;
+    }
+
     /* Hero Section */
     .hero {
-      height: 400px;
+      height: 500px;
       background: url('https://images.unsplash.com/photo-1517836357463-d25dfead9741?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      background-attachment: fixed; /* Efeito Parallax */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -139,6 +173,31 @@
 
     .info-bar i {
       margin-right: 5px;
+    }
+
+    /* Carousel */
+    .carousel {
+      max-width: 1200px;
+      margin: 40px auto;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-container {
+      display: flex;
+      animation: slide 20s infinite;
+    }
+
+    .carousel-item {
+      flex: 0 0 33.33%;
+      padding: 10px;
+    }
+
+    @keyframes slide {
+      0%, 20% { transform: translateX(0); }
+      25%, 45% { transform: translateX(-33.33%); }
+      50%, 70% { transform: translateX(-66.66%); }
+      75%, 100% { transform: translateX(0); }
     }
 
     /* Section Title */
@@ -273,7 +332,7 @@
     /* WhatsApp Float */
     .whatsapp-float {
       position: fixed;
-      bottom: 20px;
+      bottom: 80px;
       right: 20px;
       background: #25D366;
       color: white;
@@ -295,6 +354,40 @@
 
     .whatsapp-float i {
       font-size: 28px;
+    }
+
+    /* Back to Top */
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #f90;
+      color: #000;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      transition: background 0.3s, transform 0.2s;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      background: #e68a00;
+      transform: scale(1.1);
+    }
+
+    .back-to-top i {
+      font-size: 24px;
     }
 
     /* Footer */
@@ -346,12 +439,20 @@
         cursor: pointer;
       }
 
+      .hero {
+        height: 400px;
+      }
+
       .hero h1 {
         font-size: 28px;
       }
 
       .hero p {
         font-size: 16px;
+      }
+
+      .carousel-item {
+        flex: 0 0 50%;
       }
     }
 
@@ -370,6 +471,10 @@
 
       .product p {
         font-size: 13px;
+      }
+
+      .carousel-item {
+        flex: 0 0 100%;
       }
     }
   </style>
@@ -390,8 +495,63 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <h1>Aprimore os resultados dos seus treinos!</h1>
+    <h1>Transforme Seu Corpo com Fehuna Fitness</h1>
+    <p>Os melhores suplementos para seus treinos, com qualidade e preço justo!</p>
     <a href="#whey" class="cta-button">Conheça Nossos Produtos</a>
+  </section>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Pesquisar suplementos...">
+    <i class="fas fa-search"></i>
+  </div>
+
+  <!-- Carousel -->
+  <section class="carousel">
+    <h2 class="section-title">Produtos em Destaque</h2>
+    <div class="carousel-container">
+      <div class="carousel-item">
+        <div class="product">
+          <span class="badge">Mais Vendido</span>
+          <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Growth" loading="lazy">
+          <div class="product-content">
+            <h2>Whey Protein Growth 900g</h2>
+            <p>Sabor Chocolate, 23g de proteína.</p>
+            <p class="price">R$ 89,90</p>
+          </div>
+          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Whey+Protein+Concentrado+Growth+900g+-+Sabor+Chocolate" target="_blank">
+            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="product">
+          <span class="badge">Promoção</span>
+          <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina BlackSkull" loading="lazy">
+          <div class="product-content">
+            <h2>Creatina BlackSkull 300g</h2>
+            <p>Energia explosiva para hipertrofia.</p>
+            <p class="price">R$ 79,90</p>
+          </div>
+          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+BlackSkull+300g" target="_blank">
+            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="product">
+          <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino DUX" loading="lazy">
+          <div class="product-content">
+            <h2>Pré-Treino Insanity DUX 200g</h2>
+            <p>Sabor Limão, explosão de energia.</p>
+            <p class="price">R$ 89,90</p>
+          </div>
+          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Insanity+DUX+200g+-+Sabor+Limão" target="_blank">
+            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Header -->
@@ -412,7 +572,7 @@
   <div class="product-grid">
     <div class="product">
       <span class="badge">Mais Vendido</span>
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Growth" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Concentrado Growth 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein Concentrado Growth 900g</h2>
         <p>Sabor Chocolate, 23g de proteína por dose.</p>
@@ -423,7 +583,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein DUX" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Concentrado DUX 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein Concentrado DUX 900g</h2>
         <p>Sabor Chocolate, alta qualidade e pureza.</p>
@@ -434,7 +594,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein BlackSkull" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a登場543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein 3HD BlackSkull 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein 3HD BlackSkull 900g</h2>
         <p>Sabor Chocolate, blend 3W para hipertrofia.</p>
@@ -445,7 +605,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Essential" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cacao Whey Essential 900g" loading="lazy">
       <div class="product-content">
         <h2>Cacao Whey Essential 900g</h2>
         <p>Sabor Cacau, adoçado com estévia.</p>
@@ -457,7 +617,7 @@
     </div>
     <div class="product">
       <span class="badge">Promoção</span>
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Max Titanium" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Whey Protein Max Titanium 900g" loading="lazy">
       <div class="product-content">
         <h2>Whey Protein Max Titanium 900g</h2>
         <p>Sabor Chocolate, 20g de proteína por dose.</p>
@@ -473,7 +633,7 @@
   <h2 class="section-title" id="creatinas">🧬 Creatinas</h2>
   <div class="product-grid">
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Growth" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada Growth 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada Growth 300g</h2>
         <p>Máxima pureza, força e resistência.</p>
@@ -484,7 +644,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina DUX" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada DUX 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada DUX 300g</h2>
         <p>Alta performance para treinos intensos.</p>
@@ -496,7 +656,7 @@
     </div>
     <div class="product">
       <span class="badge">Mais Vendido</span>
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina BlackSkull" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada BlackSkull 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada BlackSkull 300g</h2>
         <p>Energia explosiva para hipertrofia.</p>
@@ -507,7 +667,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Essential" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada Essential 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada Essential 300g</h2>
         <p>Qualidade premium, sem aditivos.</p>
@@ -518,7 +678,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Max Titanium" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Creatina Monohidratada Max Titanium 300g" loading="lazy">
       <div class="product-content">
         <h2>Creatina Monohidratada Max Titanium 300g</h2>
         <p>Suporte para treinos de alta intensidade.</p>
@@ -534,7 +694,7 @@
   <h2 class="section-title" id="pre-treinos">💥 Pré-Treinos</h2>
   <div class="product-grid">
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Growth" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Growth 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Growth 200g</h2>
         <p>Sabor Limão, energia e foco intensos.</p>
@@ -546,7 +706,7 @@
     </div>
     <div class="product">
       <span class="badge">Promoção</span>
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino DUX" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Insanity DUX 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Insanity DUX 200g</h2>
         <p>Sabor Limão, explosão de energia.</p>
@@ -557,7 +717,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino BlackSkull" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Caveira Preta BlackSkull 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Caveira Preta BlackSkull 200g</h2>
         <p>Sabor Limão, potência máxima.</p>
@@ -568,7 +728,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Max Titanium" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Max Titanium 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Max Titanium 200g</h2>
         <p>Sabor Limão, energia para treinos pesados.</p>
@@ -579,7 +739,7 @@
       </a>
     </div>
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Integralmedica" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pré-Treino Darkness Integralmedica 200g" loading="lazy">
       <div class="product-content">
         <h2>Pré-Treino Darkness Integralmedica 200g</h2>
         <p>Sabor Limão, foco e resistência.</p>
@@ -600,7 +760,7 @@
       <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
       <a href="https://wa.me/5585999704254" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
-    <p>&copy; 2025 Fehuna Fitness. Todos os direitos reservados.</p>
+    <p>© 2025 Fehuna Fitness. Todos os direitos reservados.</p>
   </footer>
 
   <!-- BOTÃO FLUTUANTE WHATSAPP -->
@@ -608,13 +768,54 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 
-  <!-- JavaScript para Menu Mobile -->
+  <!-- BOTÃO VOLTAR AO TOPO -->
+  <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Fehuna Fitness",
+    "url": "https://www.fehunafitness.com.br",
+    "email": "fehunasuplementos@gmail.com",
+    "telephone": "+5585999704254",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Fortaleza",
+      "addressCountry": "BR"
+    },
+    "sameAs": [
+      "https://www.instagram.com/fehunafitness",
+      "https://wa.me/5585999704254"
+    ]
+  }
+  </script>
+
+  <!-- JavaScript -->
   <script>
+    // Menu Mobile
     const menuToggle = document.querySelector('.menu-toggle');
     const navUl = document.querySelector('.navbar ul');
-
     menuToggle.addEventListener('click', () => {
       navUl.classList.toggle('active');
+    });
+
+    // Search Functionality
+    const searchInput = document.querySelector('#searchInput');
+    const products = document.querySelectorAll('.product');
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      products.forEach(product => {
+        const name = product.querySelector('h2').textContent.toLowerCase();
+        product.style.display = name.includes(query) ? 'flex' : 'none';
+      });
+    });
+
+    // Back to Top
+    const backToTop = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 300);
     });
   </script>
 </body>
