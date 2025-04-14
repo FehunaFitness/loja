@@ -556,6 +556,149 @@
       background: #e68a00;
     }
 
+    /* Login Section */
+    .login-section {
+      display: none;
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 20px;
+      background: #2a2a2a;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .login-section.active {
+      display: block;
+    }
+
+    .login-section h2 {
+      font-size: 24px;
+      color: #f90;
+      margin-bottom: 20px;
+    }
+
+    .login-section input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 25px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .login-section button {
+      background: #f90;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-section button:hover {
+      background: #e68a00;
+    }
+
+    .login-section .error {
+      color: #ff4444;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* Admin Panel */
+    .admin-panel {
+      display: none;
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 20px;
+      background: #2a2a2a;
+      border-radius: 12px;
+    }
+
+    .admin-panel.active {
+      display: block;
+    }
+
+    .admin-panel h2 {
+      font-size: 24px;
+      color: #f90;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .admin-panel form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .admin-panel input,
+    .admin-panel select {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px;
+      border: none;
+      border-radius: 25px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .admin-panel button {
+      background: #f90;
+      color: #000;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .admin-panel button:hover {
+      background: #e68a00;
+    }
+
+    .admin-panel table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .admin-panel th,
+    .admin-panel td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #444;
+    }
+
+    .admin-panel th {
+      background: #1a1a1a;
+      color: #f90;
+    }
+
+    .admin-panel td button {
+      background: #ff4444;
+      margin: 0 5px;
+    }
+
+    .admin-panel td button.edit {
+      background: #f90;
+    }
+
+    .admin-panel td button:hover {
+      background: #cc3333;
+    }
+
+    .admin-panel td button.edit:hover {
+      background: #e68a00;
+    }
+
     /* Footer */
     .footer {
       background: #000;
@@ -629,6 +772,15 @@
       .newsletter button {
         width: 100%;
       }
+
+      .admin-panel form {
+        flex-direction: column;
+      }
+
+      .admin-panel input,
+      .admin-panel select {
+        min-width: 100%;
+      }
     }
 
     @media (max-width: 500px) {
@@ -651,6 +803,15 @@
       .carousel-item {
         flex: 0 0 100%;
       }
+
+      .admin-panel table {
+        font-size: 12px;
+      }
+
+      .admin-panel th,
+      .admin-panel td {
+        padding: 5px;
+      }
     }
   </style>
 </head>
@@ -666,9 +827,54 @@
       <li><a href="#creatinas">Creatinas</a></li>
       <li><a href="#pre-treinos">Pré-Treinos</a></li>
       <li><a href="https://wa.me/5585999704254" target="_blank">Contato</a></li>
+      <li><a href="#" id="adminLink">Admin</a></li>
     </ul>
     <div class="menu-toggle"><i class="fas fa-bars"></i></div>
   </nav>
+
+  <!-- Login Section -->
+  <section class="login-section" id="loginSection">
+    <h2>Login do Administrador</h2>
+    <input type="text" id="adminUsername" placeholder="Usuário" required>
+    <input type="password" id="adminPassword" placeholder="Senha" required>
+    <button onclick="handleLogin()">Entrar</button>
+    <p class="error" id="loginError"></p>
+  </section>
+
+  <!-- Admin Panel -->
+  <section class="admin-panel" id="adminPanel">
+    <h2>Gerenciar Produtos</h2>
+    <form id="productForm">
+      <input type="text" id="productName" placeholder="Nome do Produto" required>
+      <input type="text" id="productDescription" placeholder="Descrição" required>
+      <input type="number" id="productPrice" placeholder="Preço (R$)" step="0.01" required>
+      <input type="number" id="productStock" placeholder="Quantidade em Estoque" required>
+      <input type="text" id="productImage" placeholder="URL da Imagem" required>
+      <select id="productCategory" required>
+        <option value="whey">Whey Protein</option>
+        <option value="creatina">Creatina</option>
+        <option value="pre-treino">Pré-Treino</option>
+      </select>
+      <input type="text" id="productBadge" placeholder="Badge (ex: Mais Vendido, Promoção)">
+      <input type="hidden" id="productId">
+      <button type="submit">Adicionar Produto</button>
+    </form>
+    <button onclick="logout()">Sair</button>
+    <table id="productTable">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Preço</th>
+          <th>Estoque</th>
+          <th>Categoria</th>
+          <th>Badge</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -690,55 +896,14 @@
     <button data-filter="creatina">Creatina</button>
     <button data-filter="pre-treino">Pré-Treino</button>
     <button data-filter="low-price">Até R$100</button>
-    <button data-filter="high-price">Acima de R$100</button>
+   oda-filter="high-price">Acima de R$100</button>
   </div>
 
   <!-- Carousel -->
   <section class="carousel">
     <h2 class="section-title">Produtos em Destaque</h2>
     <div class="carousel-container" id="carousel">
-      <div class="carousel-item">
-        <div class="product">
-          <span class="badge">Mais Vendido</span>
-          <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Growth" loading="lazy">
-          <div class="product-content">
-            <h2>Whey Protein Growth 900g</h2>
-            <p>Sabor Chocolate, 23g de proteína.</p>
-            <p class="price">R$ 89,90</p>
-          </div>
-          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Whey+Protein+Concentrado+Growth+900g+-+Sabor+Chocolate" target="_blank">
-            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-          </a>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="product">
-          <span class="badge">Promoção</span>
-          <span class="stock-badge">Baixo Estoque</span>
-          <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina BlackSkull" loading="lazy">
-          <div class="product-content">
-            <h2>Creatina BlackSkull 300g</h2>
-            <p>Energia explosiva para hipertrofia.</p>
-            <p class="price">R$ 79,90</p>
-          </div>
-          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+BlackSkull+300g" target="_blank">
-            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-          </a>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="product">
-          <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino DUX" loading="lazy">
-          <div class="product-content">
-            <h2>Pré-Treino Insanity DUX 200g</h2>
-            <p>Sabor Limão, explosão de energia.</p>
-            <p class="price">R$ 89,90</p>
-          </div>
-          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Insanity+DUX+200g+-+Sabor+Limão" target="_blank">
-            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-          </a>
-        </div>
-      </div>
+      <!-- Carrossel será preenchido dinamicamente -->
     </div>
     <div class="carousel-controls">
       <button onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
@@ -761,189 +926,20 @@
 
   <!-- CATEGORIA: WHEY -->
   <h2 class="section-title" id="whey">🥤 Whey Protein</h2>
-  <div class="product-grid">
-    <div class="product" data-category="whey" data-price="89.90">
-      <span class="badge">Mais Vendido</span>
-      <span class="stock-badge">Baixo Estoque</span>
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Concentrado Growth 900g" loading="lazy">
-      <div class="product-content">
-        <h2>Whey Protein Concentrado Growth 900g</h2>
-        <p>Sabor Chocolate, 23g de proteína por dose.</p>
-        <p class="price">R$ 89,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Whey+Protein+Concentrado+Growth+900g+-+Sabor+Chocolate" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="whey" data-price="148.88">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Concentrado DUX 900g" loading="lazy">
-      <div class="product-content">
-        <h2>Whey Protein Concentrado DUX 900g</h2>
-        <p>Sabor Chocolate, alta qualidade e pureza.</p>
-        <p class="price">R$ 148,88</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Whey+Protein+Concentrado+DUX+900g+-+Sabor+Chocolate" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="whey" data-price="109.90">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein 3HD BlackSkull 900g" loading="lazy">
-      <div class="product-content">
-        <h2>Whey Protein 3HD BlackSkull 900g</h2>
-        <p>Sabor Chocolate, blend 3W para hipertrofia.</p>
-        <p class="price">R$ 109,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Whey+Protein+3HD+BlackSkull+900g+-+Sabor+Chocolate" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="whey" data-price="199.90">
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Cacao Whey Essential 900g" loading="lazy">
-      <div class="product-content">
-        <h2>Cacao Whey Essential 900g</h2>
-        <p>Sabor Cacau, adoçado com estévia.</p>
-        <p class="price">R$ 199,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Cacao+Whey+Essential+900g+-+Sabor+Cacau" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="whey" data-price="99.90">
-      <span class="badge">Promoção</span>
-      <img src="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Whey Protein Max Titanium 900g" loading="lazy">
-      <div class="product-content">
-        <h2>Whey Protein Max Titanium 900g</h2>
-        <p>Sabor Chocolate, 20g de proteína por dose.</p>
-        <p class="price">R$ 99,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Whey+Protein+Max+Titanium+900g+-+Sabor+Chocolate" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
+  <div class="product-grid" id="wheyGrid">
+    <!-- Preenchido dinamicamente -->
   </div>
 
   <!-- CATEGORIA: CREATINAS -->
   <h2 class="section-title" id="creatinas">🧬 Creatinas</h2>
-  <div class="product-grid">
-    <div class="product" data-category="creatina" data-price="69.90">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada Growth 300g" loading="lazy">
-      <div class="product-content">
-        <h2>Creatina Monohidratada Growth 300g</h2>
-        <p>Máxima pureza, força e resistência.</p>
-        <p class="price">R$ 69,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+Growth+300g" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="creatina" data-price="89.90">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada DUX 300g" loading="lazy">
-      <div class="product-content">
-        <h2>Creatina Monohidratada DUX 300g</h2>
-        <p>Alta performance para treinos intensos.</p>
-        <p class="price">R$ 89,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+DUX+300g" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="creatina" data-price="79.90">
-      <span class="badge">Mais Vendido</span>
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada BlackSkull 300g" loading="lazy">
-      <div class="product-content">
-        <h2>Creatina Monohidratada BlackSkull 300g</h2>
-        <p>Energia explosiva para hipertrofia.</p>
-        <p class="price">R$ 79,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+BlackSkull+300g" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="creatina" data-price="99.90">
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada Essential 300g" loading="lazy">
-      <div class="product-content">
-        <h2>Creatina Monohidratada Essential 300g</h2>
-        <p>Qualidade premium, sem aditivos.</p>
-        <p class="price">R$ 99,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+Essential+300g" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="creatina" data-price="74.90">
-      <span class="stock-badge">Baixo Estoque</span>
-      <img src="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Creatina Monohidratada Max Titanium 300g" loading="lazy">
-      <div class="product-content">
-        <h2>Creatina Monohidratada Max Titanium 300g</h2>
-        <p>Suporte para treinos de alta intensidade.</p>
-        <p class="price">R$ 74,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+na+Creatina+Monohidratada+Max+Titanium+300g" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
+  <div class="product-grid" id="creatinaGrid">
+    <!-- Preenchido dinamicamente -->
   </div>
 
   <!-- CATEGORIA: PRÉ-TREINOS -->
   <h2 class="section-title" id="pre-treinos">💥 Pré-Treinos</h2>
-  <div class="product-grid">
-    <div class="product" data-category="pre-treino" data-price="59.90">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Growth 200g" loading="lazy">
-      <div class="product-content">
-        <h2>Pré-Treino Growth 200g</h2>
-        <p>Sabor Limão, energia e foco intensos.</p>
-        <p class="price">R$ 59,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Growth+200g+-+Sabor+Limão" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="pre-treino" data-price="89.90">
-      <span class="badge">Promoção</span>
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Insanity DUX 200g" loading="lazy">
-      <div class="product-content">
-        <h2>Pré-Treino Insanity DUX 200g</h2>
-        <p>Sabor Limão, explosão de energia.</p>
-        <p class="price">R$ 89,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Insanity+DUX+200g+-+Sabor+Limão" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="pre-treino" data-price="79.90">
-      <span class="stock-badge">Baixo Estoque</span>
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Caveira Preta BlackSkull 200g" loading="lazy">
-      <div class="product-content">
-        <h2>Pré-Treino Caveira Preta BlackSkull 200g</h2>
-        <p>Sabor Limão, potência máxima.</p>
-        <p class="price">R$ 79,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Caveira+Preta+BlackSkull+200g+-+Sabor+Limão" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="pre-treino" data-price="69.90">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Max Titanium 200g" loading="lazy">
-      <div class="product-content">
-        <h2>Pré-Treino Max Titanium 200g</h2>
-        <p>Sabor Limão, energia para treinos pesados.</p>
-        <p class="price">R$ 69,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Max+Titanium+200g+-+Sabor+Limão" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
-    <div class="product" data-category="pre-treino" data-price="74.90">
-      <img src="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" srcset="https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80 300w, https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80 600w" sizes="(max-width: 600px) 300px, 600px" alt="Pré-Treino Darkness Integralmedica 200g" loading="lazy">
-      <div class="product-content">
-        <h2>Pré-Treino Darkness Integralmedica 200g</h2>
-        <p>Sabor Limão, foco e resistência.</p>
-        <p class="price">R$ 74,90</p>
-      </div>
-      <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+Pré-Treino+Darkness+Integralmedica+200g+-+Sabor+Limão" target="_blank">
-        <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-      </a>
-    </div>
+  <div class="product-grid" id="preTreinoGrid">
+    <!-- Preenchido dinamicamente -->
   </div>
 
   <!-- Newsletter -->
@@ -999,6 +995,110 @@
 
   <!-- JavaScript -->
   <script>
+    // Produtos iniciais (carregados no localStorage se não existirem)
+    const initialProducts = [
+      {
+        id: '1', name: 'Whey Protein Concentrado Growth 900g', description: 'Sabor Chocolate, 23g de proteína por dose.', price: 89.90, stock: 10, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: 'Mais Vendido', lowStock: true
+      },
+      {
+        id: '2', name: 'Whey Protein Concentrado DUX 900g', description: 'Sabor Chocolate, alta qualidade e pureza.', price: 148.88, stock: 15, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: ''
+      },
+      {
+        id: '3', name: 'Whey Protein 3HD BlackSkull 900g', description: 'Sabor Chocolate, blend 3W para hipertrofia.', price: 109.90, stock: 12, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: ''
+      },
+      {
+        id: '4', name: 'Cacao Whey Essential 900g', description: 'Sabor Cacau, adoçado com estévia.', price: 199.90, stock: 8, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: ''
+      },
+      {
+        id: '5', name: 'Whey Protein Max Titanium 900g', description: 'Sabor Chocolate, 20g de proteína por dose.', price: 99.90, stock: 20, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: 'Promoção'
+      },
+      {
+        id: '6', name: 'Creatina Monohidratada Growth 300g', description: 'Máxima pureza, força e resistência.', price: 69.90, stock: 25, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: ''
+      },
+      {
+        id: '7', name: 'Creatina Monohidratada DUX 300g', description: 'Alta performance para treinos intensos.', price: 89.90, stock: 18, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: ''
+      },
+      {
+        id: '8', name: 'Creatina Monohidratada BlackSkull 300g', description: 'Energia explosiva para hipertrofia.', price: 79.90, stock: 5, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: 'Mais Vendido', lowStock: true
+      },
+      {
+        id: '9', name: 'Creatina Monohidratada Essential 300g', description: 'Qualidade premium, sem aditivos.', price: 99.90, stock: 15, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: ''
+      },
+      {
+        id: '10', name: 'Creatina Monohidratada Max Titanium 300g', description: 'Suporte para treinos de alta intensidade.', price: 74.90, stock: 3, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: '', lowStock: true
+      },
+      {
+        id: '11', name: 'Pré-Treino Growth 200g', description: 'Sabor Limão, energia e foco intensos.', price: 59.90, stock: 20, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: ''
+      },
+      {
+        id: '12', name: 'Pré-Treino Insanity DUX 200g', description: 'Sabor Limão, explosão de energia.', price: 89.90, stock: 10, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: 'Promoção'
+      },
+      {
+        id: '13', name: 'Pré-Treino Caveira Preta BlackSkull 200g', description: 'Sabor Limão, potência máxima.', price: 79.90, stock: 4, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: '', lowStock: true
+      },
+      {
+        id: '14', name: 'Pré-Treino Max Titanium 200g', description: 'Sabor Limão, energia para treinos pesados.', price: 69.90, stock: 15, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: ''
+      },
+      {
+        id: '15', name: 'Pré-Treino Darkness Integralmedica 200g', description: 'Sabor Limão, foco e resistência.', price: 74.90, stock: 12, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: ''
+      }
+    ];
+
+    // Inicializar produtos no localStorage
+    if (!localStorage.getItem('products')) {
+      localStorage.setItem('products', JSON.stringify(initialProducts));
+    }
+
+    // Função para gerar HTML de um produto
+    function generateProductHTML(product) {
+      return `
+        <div class="product" data-category="${product.category}" data-price="${product.price}">
+          ${product.badge ? `<span class="badge">${product.badge}</span>` : ''}
+          ${product.lowStock || product.stock <= 5 ? `<span class="stock-badge">Baixo Estoque</span>` : ''}
+          <img src="${product.image}" srcset="${product.image.replace('w=600', 'w=300')} 300w, ${product.image} 600w" sizes="(max-width: 600px) 300px, 600px" alt="${product.name}" loading="lazy">
+          <div class="product-content">
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <p class="price">R$ ${product.price.toFixed(2)}</p>
+          </div>
+          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+${encodeURIComponent(product.name)}" target="_blank">
+            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
+          </a>
+        </div>
+      `;
+    }
+
+    // Carregar produtos dinamicamente
+    function loadProducts() {
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+      const wheyGrid = document.querySelector('#wheyGrid');
+      const creatinaGrid = document.querySelector('#creatinaGrid');
+      const preTreinoGrid = document.querySelector('#preTreinoGrid');
+      const carousel = document.querySelector('#carousel');
+
+      wheyGrid.innerHTML = '';
+      creatinaGrid.innerHTML = '';
+      preTreinoGrid.innerHTML = '';
+      carousel.innerHTML = '';
+
+      products.forEach(product => {
+        const productHTML = generateProductHTML(product);
+        if (product.category === 'whey') {
+          wheyGrid.innerHTML += productHTML;
+        } else if (product.category === 'creatina') {
+          creatinaGrid.innerHTML += productHTML;
+        } else if (product.category === 'pre-treino') {
+          preTreinoGrid.innerHTML += productHTML;
+        }
+        if (product.badge || product.lowStock) {
+          carousel.innerHTML += `<div class="carousel-item">${productHTML}</div>`;
+        }
+      });
+    }
+
+    // Carregar produtos ao iniciar
+    loadProducts();
+
     // Loader
     window.addEventListener('load', () => {
       document.querySelector('.loader').classList.add('hidden');
@@ -1013,10 +1113,10 @@
 
     // Search Functionality
     const searchInput = document.querySelector('#searchInput');
-    const products = document.querySelectorAll('.product');
+    const productsElements = document.querySelectorAll('.product');
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
-      products.forEach(product => {
+      productsElements.forEach(product => {
         const name = product.querySelector('h2').textContent.toLowerCase();
         product.style.display = name.includes(query) ? 'flex' : 'none';
       });
@@ -1029,7 +1129,7 @@
         filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
         const filter = button.dataset.filter;
-        products.forEach(product => {
+        productsElements.forEach(product => {
           const category = product.dataset.category;
           const price = parseFloat(product.dataset.price);
           if (filter === 'all') {
@@ -1048,20 +1148,27 @@
     // Carousel Controls
     let currentSlide = 0;
     const carousel = document.querySelector('#carousel');
-    const totalSlides = document.querySelectorAll('.carousel-item').length;
+    let totalSlides = document.querySelectorAll('.carousel-item').length;
 
     function updateCarousel() {
-      carousel.style.transform = `translateX(-${currentSlide * 33.33}%)`;
+      totalSlides = document.querySelectorAll('.carousel-item').length;
+      if (totalSlides > 0) {
+        carousel.style.transform = `translateX(-${currentSlide * 33.33}%)`;
+      }
     }
 
     function nextSlide() {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateCarousel();
+      if (totalSlides > 0) {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+      }
     }
 
     function prevSlide() {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateCarousel();
+      if (totalSlides > 0) {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+      }
     }
 
     // Back to Top
@@ -1069,6 +1176,134 @@
     window.addEventListener('scroll', () => {
       backToTop.classList.toggle('visible', window.scrollY > 300);
     });
+
+    // Admin Login
+    const loginSection = document.querySelector('#loginSection');
+    const adminPanel = document.querySelector('#adminPanel');
+    const adminLink = document.querySelector('#adminLink');
+    const loginError = document.querySelector('#loginError');
+
+    adminLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('section, .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => el.style.display = 'none');
+      loginSection.classList.add('active');
+    });
+
+    function handleLogin() {
+      const username = document.querySelector('#adminUsername').value;
+      const password = document.querySelector('#adminPassword').value;
+
+      // Credenciais padrão (para demonstração)
+      let adminCredentials = JSON.parse(localStorage.getItem('adminCredentials'));
+      if (!adminCredentials) {
+        adminCredentials = { username: 'admin', password: 'admin123' };
+        localStorage.setItem('adminCredentials', JSON.stringify(adminCredentials));
+      }
+
+      if (username === adminCredentials.username && password === adminCredentials.password) {
+        loginSection.classList.remove('active');
+        adminPanel.classList.add('active');
+        loadAdminProducts();
+        loginError.textContent = '';
+      } else {
+        loginError.textContent = 'Usuário ou senha incorretos!';
+      }
+    }
+
+    function logout() {
+      adminPanel.classList.remove('active');
+      document.querySelectorAll('section, .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => el.style.display = '');
+      loadProducts();
+    }
+
+    // Admin Product Management
+    const productForm = document.querySelector('#productForm');
+    const productTable = document.querySelector('#productTable tbody');
+
+    function loadAdminProducts() {
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+      productTable.innerHTML = '';
+      products.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${product.name}</td>
+          <td>${product.description}</td>
+          <td>R$ ${product.price.toFixed(2)}</td>
+          <td>${product.stock}</td>
+          <td>${product.category}</td>
+          <td>${product.badge || '-'}</td>
+          <td>
+            <button class="edit" onclick="editProduct('${product.id}')">Editar</button>
+            <button onclick="deleteProduct('${product.id}')">Excluir</button>
+          </td>
+        `;
+        productTable.appendChild(row);
+      });
+    }
+
+    productForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = document.querySelector('#productId').value || Date.now().toString();
+      const name = document.querySelector('#productName').value;
+      const description = document.querySelector('#productDescription').value;
+      const price = parseFloat(document.querySelector('#productPrice').value);
+      const stock = parseInt(document.querySelector('#productStock').value);
+      const image = document.querySelector('#productImage').value;
+      const category = document.querySelector('#productCategory').value;
+      const badge = document.querySelector('#productBadge').value;
+
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+      const productIndex = products.findIndex(p => p.id === id);
+
+      const newProduct = {
+        id,
+        name,
+        description,
+        price,
+        stock,
+        image,
+        category,
+        badge,
+        lowStock: stock <= 5
+      };
+
+      if (productIndex >= 0) {
+        products[productIndex] = newProduct;
+      } else {
+        products.push(newProduct);
+      }
+
+      localStorage.setItem('products', JSON.stringify(products));
+      productForm.reset();
+      document.querySelector('#productId').value = '';
+      loadAdminProducts();
+      loadProducts();
+    });
+
+    function editProduct(id) {
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+      const product = products.find(p => p.id === id);
+      if (product) {
+        document.querySelector('#productId').value = product.id;
+        document.querySelector('#productName').value = product.name;
+        document.querySelector('#productDescription').value = product.description;
+        document.querySelector('#productPrice').value = product.price;
+        document.querySelector('#productStock').value = product.stock;
+        document.querySelector('#productImage').value = product.image;
+        document.querySelector('#productCategory').value = product.category;
+        document.querySelector('#productBadge').value = product.badge || '';
+      }
+    }
+
+    function deleteProduct(id) {
+      if (confirm('Tem certeza que deseja excluir este produto?')) {
+        let products = JSON.parse(localStorage.getItem('products')) || [];
+        products = products.filter(p => p.id !== id);
+        localStorage.setItem('products', JSON.stringify(products));
+        loadAdminProducts();
+        loadProducts();
+      }
+    }
   </script>
 </body>
 </html>
