@@ -696,7 +696,8 @@
     }
 
     .admin-panel td button.edit:hover {
-      background: #e68a00;
+      background: #e/tests/index.html
+68a00;
     }
 
     /* Footer */
@@ -847,8 +848,8 @@
     <form id="productForm">
       <input type="text" id="productName" placeholder="Nome do Produto" required>
       <input type="text" id="productDescription" placeholder="Descrição" required>
-      <input type="number" id="productPrice" placeholder="Preço (R$)" step="0.01" required>
-      <input type="number" id="productStock" placeholder="Quantidade em Estoque" required>
+      <input type="number" id="productPrice" placeholder="Preço (R$)" step="0.01" min="0" required>
+      <input type="number" id="productStock" placeholder="Quantidade em Estoque" min="0" required>
       <input type="text" id="productImage" placeholder="URL da Imagem" required>
       <select id="productCategory" required>
         <option value="whey">Whey Protein</option>
@@ -995,7 +996,7 @@
 
   <!-- JavaScript -->
   <script>
-    // Produtos iniciais (carregados no localStorage se não existirem)
+    // Produtos iniciais (carregados no localStorage apenas se vazio)
     const initialProducts = [
       {
         id: '1', name: 'Whey Protein Concentrado Growth 900g', description: 'Sabor Chocolate, 23g de proteína por dose.', price: 89.90, stock: 10, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: 'Mais Vendido', lowStock: true
@@ -1044,7 +1045,7 @@
       }
     ];
 
-    // Inicializar produtos no localStorage
+    // Inicializar produtos no localStorage apenas se estiver vazio
     if (!localStorage.getItem('products')) {
       localStorage.setItem('products', JSON.stringify(initialProducts));
     }
@@ -1190,7 +1191,6 @@
 
     adminLink.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log('Admin link clicked'); // Para debug
       document.querySelectorAll('section:not(#loginSection), .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => {
         el.style.display = 'none';
       });
@@ -1254,13 +1254,19 @@
     productForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const id = document.querySelector('#productId').value || Date.now().toString();
-      const name = document.querySelector('#productName').value;
-      const description = document.querySelector('#productDescription').value;
+      const name = document.querySelector('#productName').value.trim();
+      const description = document.querySelector('#productDescription').value.trim();
       const price = parseFloat(document.querySelector('#productPrice').value);
       const stock = parseInt(document.querySelector('#productStock').value);
-      const image = document.querySelector('#productImage').value;
+      const image = document.querySelector('#productImage').value.trim();
       const category = document.querySelector('#productCategory').value;
-      const badge = document.querySelector('#productBadge').value;
+      const badge = document.querySelector('#productBadge').value.trim();
+
+      // Validação básica
+      if (!name || !description || isNaN(price) || isNaN(stock) || !image || !category) {
+        alert('Por favor, preencha todos os campos obrigatórios com valores válidos.');
+        return;
+      }
 
       const products = JSON.parse(localStorage.getItem('products')) || [];
       const productIndex = products.findIndex(p => p.id === id);
