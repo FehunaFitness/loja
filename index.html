@@ -696,8 +696,7 @@
     }
 
     .admin-panel td button.edit:hover {
-      background: #e/tests/index.html
-68a00;
+      background: #e68a00;
     }
 
     /* Footer */
@@ -1091,13 +1090,15 @@
         } else if (product.category === 'pre-treino') {
           preTreinoGrid.innerHTML += productHTML;
         }
-        if (product.badge || product.lowStock) {
+        if (product.badge || product.lowStock || product.stock <= 5) {
           carousel.innerHTML += `<div class="carousel-item">${productHTML}</div>`;
         }
       });
 
       // Reaplicar eventos de filtro e busca após carregar produtos
       applyFiltersAndSearch();
+      // Atualizar carrossel
+      updateCarousel();
     }
 
     // Carregar produtos ao iniciar
@@ -1263,12 +1264,12 @@
       const badge = document.querySelector('#productBadge').value.trim();
 
       // Validação básica
-      if (!name || !description || isNaN(price) || isNaN(stock) || !image || !category) {
+      if (!name || !description || isNaN(price) || price < 0 || isNaN(stock) || stock < 0 || !image || !category) {
         alert('Por favor, preencha todos os campos obrigatórios com valores válidos.');
         return;
       }
 
-      const products = JSON.parse(localStorage.getItem('products')) || [];
+      let products = JSON.parse(localStorage.getItem('products')) || [];
       const productIndex = products.findIndex(p => p.id === id);
 
       const newProduct = {
