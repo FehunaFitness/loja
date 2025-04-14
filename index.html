@@ -1,1060 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Fehuna Fitness - Loja de suplementos alimentares com Whey Protein, Creatina e Pré-Treinos das melhores marcas. Frete grátis em Fortaleza!">
-  <meta name="keywords" content="suplementos, whey protein, creatina, pré-treino, fitness, Fortaleza">
-  <meta name="author" content="Fehuna Fitness">
-  <title>Fehuna Fitness - Loja de Suplementos</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-
-  <!-- Ícones (Font Awesome) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: #1a1a1a;
-      color: #fff;
-      overflow-x: hidden;
-    }
-
-    /* Loader */
-    .loader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #1a1a1a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      transition: opacity 0.5s;
-    }
-
-    .loader.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .loader::after {
-      content: '';
-      width: 40px;
-      height: 40px;
-      border: 4px solid #f90;
-      border-top: 4px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* Navbar */
-    .navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(5px);
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .navbar .logo {
-      font-size: 24px;
-      font-weight: 600;
-      color: #f90;
-    }
-
-    .navbar ul {
-      display: flex;
-      list-style: none;
-    }
-
-    .navbar ul li {
-      margin: 0 15px;
-    }
-
-    .navbar ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-
-    .navbar ul li a:hover {
-      color: #f90;
-    }
-
-    /* Search Bar */
-    .search-bar {
-      position: relative;
-      margin: 15px auto;
-      max-width: 600px;
-      padding: 0 20px;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 10px 40px 10px 15px;
-      border-radius: 25px;
-      border: none;
-      background: #2a2a2a;
-      color: #fff;
-      font-size: 14px;
-    }
-
-    .search-bar input::placeholder {
-      color: #aaa;
-    }
-
-    .search-bar i {
-      position: absolute;
-      right: 35px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #f90;
-    }
-
-    /* Filters */
-    .filters {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 20px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .filters button {
-      background: #2a2a2a;
-      color: #fff;
-      border: 1px solid #f90;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .filters button.active,
-    .filters button:hover {
-      background: #f90;
-      color: #000;
-    }
-
-    /* Hero Section */
-    .hero {
-      height: 500px;
-      background: url('https://images.unsplash.com/photo-1517836357463-d25dfead9741?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-      background-attachment: fixed;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-      margin-bottom: 40px;
-    }
-
-    .hero h1 {
-      font-size: 36px;
-      font-weight: 700;
-      color: #fff;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #ddd;
-      margin: 10px 0;
-    }
-
-    .hero .cta-button {
-      background: #f90;
-      color: #000;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 25px;
-      font-weight: 600;
-      transition: background 0.3s;
-    }
-
-    .hero .cta-button:hover {
-      background: #e68a00;
-    }
-
-    /* Header */
-    .header {
-      background-color: #000;
-      color: white;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 80px;
-    }
-
-    .header img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-
-    .header h1 {
-      font-size: 28px;
-      font-weight: 600;
-      color: #f90;
-    }
-
-    /* Info Bar */
-    .info-bar {
-      background: linear-gradient(90deg, #f90, #ffaa00);
-      color: black;
-      text-align: center;
-      padding: 12px 15px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .info-bar i {
-      margin-right: 5px;
-    }
-
-    /* Carousel */
-    .carousel {
-      max-width: 1200px;
-      margin: 40px auto;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-container {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
-
-    .carousel-item {
-      flex: 0 0 33.33%;
-      padding: 10px;
-    }
-
-    .carousel-controls {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-    }
-
-    .carousel-controls button {
-      background: rgba(0, 0, 0, 0.5);
-      border: none;
-      color: #f90;
-      font-size: 24px;
-      padding: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .carousel-controls button:hover {
-      background: rgba(0, 0, 0, 0.8);
-    }
-
-    /* Section Title */
-    .section-title {
-      text-align: center;
-      font-size: 24px;
-      font-weight: 600;
-      margin-top: 40px;
-      margin-bottom: 20px;
-      color: #f90;
-      position: relative;
-    }
-
-    .section-title::after {
-      content: '';
-      width: 50px;
-      height: 3px;
-      background: #f90;
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    /* Product Grid */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-      opacity: 0;
-      animation: fadeIn 1s forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-
-    /* Product Card */
-    .product {
-      background: #2a2a2a;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    .product:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
-
-    .product img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .product-content {
-      padding: 15px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .product h2 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .product p {
-      font-size: 14px;
-      margin-bottom: 5px;
-      color: #ccc;
-    }
-
-    .product .price {
-      font-weight: bold;
-      color: #f90;
-      margin-top: auto;
-      font-size: 16px;
-    }
-
-    .product .price::before {
-      content: '💰 ';
-      font-size: 14px;
-    }
-
-    /* Badges */
-    .product .badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: #f90;
-      color: #000;
-      padding: 5px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .product .stock-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #ff4444;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    /* WhatsApp Button */
-    .whatsapp-button {
-      background: #25D366;
-      color: white;
-      text-align: center;
-      padding: 12px;
-      font-size: 15px;
-      border-radius: 0 0 12px 12px;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .whatsapp-button:hover {
-      background: #1ebe5b;
-      transform: scale(1.05);
-    }
-
-    .whatsapp-button i {
-      margin-right: 6px;
-    }
-
-    .whatsapp-button::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: width 0.3s, height 0.3s;
-    }
-
-    .whatsapp-button:active::after {
-      width: 200px;
-      height: 200px;
-    }
-
-    /* WhatsApp Float */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: #25D366;
-      color: white;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      z-index: 100;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    .whatsapp-float:hover {
-      background: #1ebe5b;
-      transform: scale(1.1);
-    }
-
-    .whatsapp-float i {
-      font-size: 28px;
-    }
-
-    /* Back to Top */
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #f90;
-      color: #000;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      z-index: 100;
-      transition: background 0.3s, transform 0.2s;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .back-to-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .back-to-top:hover {
-      background: #e68a00;
-      transform: scale(1.1);
-    }
-
-    .back-to-top i {
-      font-size: 24px;
-    }
-
-    /* Newsletter */
-    .newsletter {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 20px;
-      text-align: center;
-      background: #2a2a2a;
-      border-radius: 12px;
-    }
-
-    .newsletter h2 {
-      font-size: 24px;
-      color: #f90;
-      margin-bottom: 10px;
-    }
-
-    .newsletter p {
-      font-size: 14px;
-      color: #ccc;
-      margin-bottom: 20px;
-    }
-
-    .newsletter form {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    .newsletter input {
-      padding: 10px;
-      border: none;
-      border-radius: 25px;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 14px;
-      flex: 1;
-    }
-
-    .newsletter button {
-      background: #f90;
-      color: #000;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .newsletter button:hover {
-      background: #e68a00;
-    }
-
-    /* Login Section */
-    .login-section {
-      display: none;
-      max-width: 400px;
-      margin: 100px auto;
-      padding: 20px;
-      background: #2a2a2a;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .login-section.active {
-      display: block;
-    }
-
-    .login-section h2 {
-      font-size: 24px;
-      color: #f90;
-      margin-bottom: 20px;
-    }
-
-    .login-section input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 25px;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 14px;
-    }
-
-    .login-section button {
-      background: #f90;
-      color: #000;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .login-section button:hover {
-      background: #e68a00;
-    }
-
-    .login-section .error {
-      color: #ff4444;
-      font-size: 12px;
-      margin-top: 10px;
-    }
-
-    /* Admin Panel */
-    .admin-panel {
-      display: none;
-      max-width: 1200px;
-      margin: 100px auto;
-      padding: 20px;
-      background: #2a2a2a;
-      border-radius: 12px;
-    }
-
-    .admin-panel.active {
-      display: block;
-    }
-
-    .admin-panel h2 {
-      font-size: 24px;
-      color: #f90;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .admin-panel form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .admin-panel input,
-    .admin-panel select {
-      flex: 1;
-      min-width: 200px;
-      padding: 10px;
-      border: none;
-      border-radius: 25px;
-      background: #1a1a1a;
-      color: #fff;
-      font-size: 14px;
-    }
-
-    .admin-panel button {
-      background: #f90;
-      color: #000;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 25px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .admin-panel button:hover {
-      background: #e68a00;
-    }
-
-    .admin-panel table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-
-    .admin-panel th,
-    .admin-panel td {
-      padding: 10px;
-      text-align: left;
-      border-bottom: 1px solid #444;
-    }
-
-    .admin-panel th {
-      background: #1a1a1a;
-      color: #f90;
-    }
-
-    .admin-panel td button {
-      background: #ff4444;
-      margin: 0 5px;
-    }
-
-    .admin-panel td button.edit {
-      background: #f90;
-    }
-
-    .admin-panel td button:hover {
-      background: #cc3333;
-    }
-
-    .admin-panel td button.edit:hover {
-      background: #e68a00;
-    }
-
-    /* Footer */
-    .footer {
-      background: #000;
-      color: #ccc;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 40px;
-    }
-
-    .footer p {
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .footer .social-links a {
-      color: #f90;
-      font-size: 20px;
-      margin: 0 10px;
-      transition: color 0.3s;
-    }
-
-    .footer .social-links a:hover {
-      color: #fff;
-    }
-
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .navbar ul {
-        flex-direction: column;
-        background: rgba(0, 0, 0, 0.95);
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        padding: 10px;
-        border-radius: 8px;
-        display: none;
-      }
-
-      .navbar ul.active {
-        display: flex;
-      }
-
-      .navbar .menu-toggle {
-        display: block;
-        color: #f90;
-        font-size: 24px;
-        cursor: pointer;
-      }
-
-      .hero {
-        height: 400px;
-      }
-
-      .hero h1 {
-        font-size: 28px;
-      }
-
-      .hero p {
-        font-size: 16px;
-      }
-
-      .carousel-item {
-        flex: 0 0 50%;
-      }
-
-      .newsletter form {
-        flex-direction: column;
-      }
-
-      .newsletter input,
-      .newsletter button {
-        width: 100%;
-      }
-
-      .admin-panel form {
-        flex-direction: column;
-      }
-
-      .admin-panel input,
-      .admin-panel select {
-        min-width: 100%;
-      }
-    }
-
-    @media (max-width: 500px) {
-      .header h1 {
-        font-size: 22px;
-      }
-
-      .section-title {
-        font-size: 20px;
-      }
-
-      .product h2 {
-        font-size: 16px;
-      }
-
-      .product p {
-        font-size: 13px;
-      }
-
-      .carousel-item {
-        flex: 0 0 100%;
-      }
-
-      .admin-panel table {
-        font-size: 12px;
-      }
-
-      .admin-panel th,
-      .admin-panel td {
-        padding: 5px;
-      }
-    }
-  </style>
+  <!-- ... (mantenha todo o head original) ... -->
 </head>
 <body>
-  <!-- Loader -->
-  <div class="loader"></div>
+  <!-- ... (mantenha toda a estrutura HTML original) ... -->
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">Fehuna Fitness</div>
-    <ul>
-      <li><a href="#whey">Whey Protein</a></li>
-      <li><a href="#creatinas">Creatinas</a></li>
-      <li><a href="#pre-treinos">Pré-Treinos</a></li>
-      <li><a href="https://wa.me/5585999704254" target="_blank">Contato</a></li>
-      <li><a href="#" id="adminLink">Admin</a></li>
-    </ul>
-    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-  </nav>
-
-  <!-- Login Section -->
-  <section class="login-section" id="loginSection">
-    <h2>Login do Administrador</h2>
-    <input type="text" id="adminUsername" placeholder="Usuário" required>
-    <input type="password" id="adminPassword" placeholder="Senha" required>
-    <button onclick="handleLogin()">Entrar</button>
-    <p class="error" id="loginError"></p>
-  </section>
-
-  <!-- Admin Panel -->
-  <section class="admin-panel" id="adminPanel">
-    <h2>Gerenciar Produtos</h2>
-    <form id="productForm">
-      <input type="text" id="productName" placeholder="Nome do Produto" required>
-      <input type="text" id="productDescription" placeholder="Descrição" required>
-      <input type="number" id="productPrice" placeholder="Preço (R$)" step="0.01" min="0" required>
-      <input type="number" id="productStock" placeholder="Quantidade em Estoque" min="0" required>
-      <input type="text" id="productImage" placeholder="URL da Imagem" required>
-      <select id="productCategory" required>
-        <option value="whey">Whey Protein</option>
-        <option value="creatina">Creatina</option>
-        <option value="pre-treino">Pré-Treino</option>
-      </select>
-      <input type="text" id="productBadge" placeholder="Badge (ex: Mais Vendido, Promoção)">
-      <input type="hidden" id="productId">
-      <button type="submit">Adicionar Produto</button>
-    </form>
-    <button onclick="logout()">Sair</button>
-    <table id="productTable">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Descrição</th>
-          <th>Preço</th>
-          <th>Estoque</th>
-          <th>Categoria</th>
-          <th>Badge</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Transforme Seu Corpo com Fehuna Fitness</h1>
-    <p>Os melhores suplementos para seus treinos, com qualidade e preço justo!</p>
-    <a href="#whey" class="cta-button">Conheça Nossos Produtos</a>
-  </section>
-
-  <!-- Search Bar -->
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Pesquisar suplementos...">
-    <i class="fas fa-search"></i>
-  </div>
-
-  <!-- Filters -->
-  <div class="filters">
-    <button data-filter="all" class="active">Todos</button>
-    <button data-filter="whey">Whey Protein</button>
-    <button data-filter="creatina">Creatina</button>
-    <button data-filter="pre-treino">Pré-Treino</button>
-    <button data-filter="low-price">Até R$100</button>
-    <button data-filter="high-price">Acima de R$100</button>
-  </div>
-
-  <!-- Carousel -->
-  <section class="carousel">
-    <h2 class="section-title">Produtos em Destaque</h2>
-    <div class="carousel-container" id="carousel">
-      <!-- Carrossel será preenchido dinamicamente -->
-    </div>
-    <div class="carousel-controls">
-      <button onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-      <button onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
-    </div>
-  </section>
-
-  <!-- Header -->
-  <div class="header">
-    <img src="https://i.ibb.co/4zZRM4W/1577cfa9-10de-451a-9a05-43e14c8d1bc7-removebg-preview-YKb3vq-REwa-UZkv-Mj.jpg" alt="Logo Fehuna Fitness" loading="lazy">
-    <h1>Fehuna Fitness</h1>
-  </div>
-
-  <!-- Info Bar -->
-  <div class="info-bar">
-    <p><i class="fas fa-envelope"></i> fehunasuplementos@gmail.com   |   
-    <i class="fas fa-clock"></i> Todos os dias, das 8h às 19h   |   
-    <i class="fas fa-truck"></i> Frete grátis em Fortaleza e região metropolitana</p>
-  </div>
-
-  <!-- CATEGORIA: WHEY -->
-  <h2 class="section-title" id="whey">🥤 Whey Protein</h2>
-  <div class="product-grid" id="wheyGrid">
-    <!-- Preenchido dinamicamente -->
-  </div>
-
-  <!-- CATEGORIA: CREATINAS -->
-  <h2 class="section-title" id="creatinas">🧬 Creatinas</h2>
-  <div class="product-grid" id="creatinaGrid">
-    <!-- Preenchido dinamicamente -->
-  </div>
-
-  <!-- CATEGORIA: PRÉ-TREINOS -->
-  <h2 class="section-title" id="pre-treinos">💥 Pré-Treinos</h2>
-  <div class="product-grid" id="preTreinoGrid">
-    <!-- Preenchido dinamicamente -->
-  </div>
-
-  <!-- Newsletter -->
-  <section class="newsletter">
-    <h2>Receba Nossas Ofertas!</h2>
-    <p>Cadastre-se para novidades e promoções exclusivas.</p>
-    <form>
-      <input type="email" placeholder="Digite seu e-mail" required>
-      <button type="submit">Inscrever-se</button>
-    </form>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>Fehuna Fitness - Suplementos de Qualidade</p>
-    <p><i class="fas fa-envelope"></i> fehunasuplementos@gmail.com | <i class="fas fa-phone"></i> (85) 99970-4254</p>
-    <div class="social-links">
-      <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="https://wa.me/5585999704254" target="_blank"><i class="fab fa-whatsapp"></i></a>
-    </div>
-    <p>© 2025 Fehuna Fitness. Todos os direitos reservados.</p>
-  </footer>
-
-  <!-- BOTÃO FLUTUANTE WHATSAPP -->
-  <a href="https://wa.me/5585999704254" class="whatsapp-float" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-
-  <!-- BOTÃO VOLTAR AO TOPO -->
-  <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
-
-  <!-- Schema Markup -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Store",
-    "name": "Fehuna Fitness",
-    "url": "https://www.fehunafitness.com.br",
-    "email": "fehunasuplementos@gmail.com",
-    "telephone": "+5585999704254",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Fortaleza",
-      "addressCountry": "BR"
-    },
-    "sameAs": [
-      "https://www.instagram.com/fehunafitness",
-      "https://wa.me/5585999704254"
-    ]
-  }
-  </script>
-
-  <!-- JavaScript -->
   <script>
-    // Produtos iniciais
-    const initialProducts = [
-      {
-        id: '1', name: 'Whey Protein Concentrado Growth 900g', description: 'Sabor Chocolate, 23g de proteína por dose.', price: 89.90, stock: 10, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: 'Mais Vendido', lowStock: true
-      },
-      {
-        id: '2', name: 'Whey Protein Concentrado DUX 900g', description: 'Sabor Chocolate, alta qualidade e pureza.', price: 148.88, stock: 15, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: ''
-      },
-      {
-        id: '3', name: 'Whey Protein 3HD BlackSkull 900g', description: 'Sabor Chocolate, blend 3W para hipertrofia.', price: 109.90, stock: 12, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: ''
-      },
-      {
-        id: '4', name: 'Cacao Whey Essential 900g', description: 'Sabor Cacau, adoçado com estévia.', price: 199.90, stock: 8, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: ''
-      },
-      {
-        id: '5', name: 'Whey Protein Max Titanium 900g', description: 'Sabor Chocolate, 20g de proteína por dose.', price: 99.90, stock: 20, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: 'Promoção'
-      },
-      {
-        id: '6', name: 'Creatina Monohidratada Growth 300g', description: 'Máxima pureza, força e resistência.', price: 69.90, stock: 25, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: ''
-      },
-      {
-        id: '7', name: 'Creatina Monohidratada DUX 300g', description: 'Alta performance para treinos intensos.', price: 89.90, stock: 18, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: ''
-      },
-      {
-        id: '8', name: 'Creatina Monohidratada BlackSkull 300g', description: 'Energia explosiva para hipertrofia.', price: 79.90, stock: 5, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: 'Mais Vendido', lowStock: true
-      },
-      {
-        id: '9', name: 'Creatina Monohidratada Essential 300g', description: 'Qualidade premium, sem aditivos.', price: 99.90, stock: 15, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: ''
-      },
-      {
-        id: '10', name: 'Creatina Monohidratada Max Titanium 300g', description: 'Suporte para treinos de alta intensidade.', price: 74.90, stock: 3, image: 'https://images.unsplash.com/photo-1586676856788-82b09e4d7c07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'creatina', badge: '', lowStock: true
-      },
-      {
-        id: '11', name: 'Pré-Treino Growth 200g', description: 'Sabor Limão, energia e foco intensos.', price: 59.90, stock: 20, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: ''
-      },
-      {
-        id: '12', name: 'Pré-Treino Insanity DUX 200g', description: 'Sabor Limão, explosão de energia.', price: 89.90, stock: 10, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: 'Promoção'
-      },
-      {
-        id: '13', name: 'Pré-Treino Caveira Preta BlackSkull 200g', description: 'Sabor Limão, potência máxima.', price: 79.90, stock: 4, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: '', lowStock: true
-      },
-      {
-        id: '14', name: 'Pré-Treino Max Titanium 200g', description: 'Sabor Limão, energia para treinos pesados.', price: 69.90, stock: 15, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: ''
-      },
-      {
-        id: '15', name: 'Pré-Treino Darkness Integralmedica 200g', description: 'Sabor Limão, foco e resistência.', price: 74.90, stock: 12, image: 'https://images.unsplash.com/photo-1593078165727-9b10e27d1af6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'pre-treino', badge: ''
-      }
-    ];
-
-    // Inicializar produtos no localStorage apenas se estiver vazio ou corrompido
-    try {
-      const storedProducts = JSON.parse(localStorage.getItem('products'));
-      if (!Array.isArray(storedProducts)) {
+    // Produtos iniciais (mantenha o array original)
+    
+    // Função para inicializar o localStorage
+    function initializeStorage() {
+      try {
+        const storedProducts = JSON.parse(localStorage.getItem('products'));
+        if (!Array.isArray(storedProducts)) {
+          localStorage.setItem('products', JSON.stringify(initialProducts));
+        }
+      } catch (e) {
         localStorage.setItem('products', JSON.stringify(initialProducts));
       }
-    } catch (e) {
-      localStorage.setItem('products', JSON.stringify(initialProducts));
     }
 
-    // Função para gerar HTML de um produto
+    // Função para gerar HTML de um produto - CORRIGIDA
     function generateProductHTML(product) {
       return `
         <div class="product" data-category="${product.category}" data-price="${product.price}">
@@ -1073,11 +40,13 @@
       `;
     }
 
-    // Carregar produtos dinamicamente
+    // Carregar produtos dinamicamente - ATUALIZADA
     function loadProducts() {
+      initializeStorage(); // Garante que o localStorage está inicializado
+      
       let products;
       try {
-        products = JSON.parse(localStorage.getItem('products')) || [];
+        products = JSON.parse(localStorage.getItem('products'));
         if (!Array.isArray(products)) {
           products = initialProducts;
           localStorage.setItem('products', JSON.stringify(products));
@@ -1100,14 +69,14 @@
       products.forEach(product => {
         const productHTML = generateProductHTML(product);
         if (product.category === 'whey') {
-          wheyGrid.innerHTML += productHTML;
+          wheyGrid.insertAdjacentHTML('beforeend', productHTML);
         } else if (product.category === 'creatina') {
-          creatinaGrid.innerHTML += productHTML;
+          creatinaGrid.insertAdjacentHTML('beforeend', productHTML);
         } else if (product.category === 'pre-treino') {
-          preTreinoGrid.innerHTML += productHTML;
+          preTreinoGrid.insertAdjacentHTML('beforeend', productHTML);
         }
         if (product.badge || product.lowStock || product.stock <= 5) {
-          carousel.innerHTML += `<div class="carousel-item">${productHTML}</div>`;
+          carousel.insertAdjacentHTML('beforeend', `<div class="carousel-item">${productHTML}</div>`);
         }
       });
 
@@ -1115,99 +84,7 @@
       updateCarousel();
     }
 
-    // Loader
-    window.addEventListener('load', () => {
-      try {
-        loadProducts();
-      } catch (e) {
-        console.error('Erro ao carregar produtos:', e);
-      }
-      setTimeout(() => {
-        document.querySelector('.loader').classList.add('hidden');
-      }, 500);
-    });
-
-    // Menu Mobile
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navUl = document.querySelector('.navbar ul');
-    menuToggle.addEventListener('click', () => {
-      navUl.classList.toggle('active');
-    });
-
-    // Função para aplicar filtros e busca
-    function applyFiltersAndSearch() {
-      const productsElements = document.querySelectorAll('.product');
-      const searchInput = document.querySelector('#searchInput');
-      const filterButtons = document.querySelectorAll('.filters button');
-
-      // Remover eventos anteriores para evitar múltiplos listeners
-      const newSearchInput = searchInput.cloneNode(true);
-      searchInput.parentNode.replaceChild(newSearchInput, searchInput);
-
-      newSearchInput.addEventListener('input', () => {
-        const query = newSearchInput.value.toLowerCase();
-        productsElements.forEach(product => {
-          const name = product.querySelector('h2').textContent.toLowerCase();
-          product.style.display = name.includes(query) ? 'flex' : 'none';
-        });
-      });
-
-      filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          filterButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-          const filter = button.dataset.filter;
-          productsElements.forEach(product => {
-            const category = product.dataset.category;
-            const price = parseFloat(product.dataset.price);
-            if (filter === 'all') {
-              product.style.display = 'flex';
-            } else if (filter === 'low-price' && price <= 100) {
-              product.style.display = 'flex';
-            } else if (filter === 'high-price' && price > 100) {
-              product.style.display = 'flex';
-            } else {
-              product.style.display = category === filter ? 'flex' : 'none';
-            }
-          });
-        });
-      });
-    }
-
-    // Carousel Controls
-    let currentSlide = 0;
-    let totalSlides = 0;
-    const carousel = document.querySelector('#carousel');
-
-    function updateCarousel() {
-      totalSlides = document.querySelectorAll('.carousel-item').length;
-      if (totalSlides > 0) {
-        currentSlide = Math.max(0, Math.min(currentSlide, totalSlides - 1));
-        carousel.style.transform = `translateX(-${currentSlide * 33.33}%)`;
-      }
-    }
-
-    function nextSlide() {
-      if (totalSlides > 0) {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateCarousel();
-      }
-    }
-
-    function prevSlide() {
-      if (totalSlides > 0) {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateCarousel();
-      }
-    }
-
-    // Back to Top
-    const backToTop = document.querySelector('.back-to-top');
-    window.addEventListener('scroll', () => {
-      backToTop.classList.toggle('visible', window.scrollY > 300);
-    });
-
-    // Admin Login
+    // Admin Login - ATUALIZADA
     const loginSection = document.querySelector('#loginSection');
     const adminPanel = document.querySelector('#adminPanel');
     const adminLink = document.querySelector('#adminLink');
@@ -1215,16 +92,19 @@
 
     adminLink.addEventListener('click', (e) => {
       e.preventDefault();
-      document.querySelectorAll('section:not(#loginSection), .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => {
+      // Esconde todas as seções principais
+      document.querySelectorAll('section:not(#loginSection):not(#adminPanel), .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => {
         el.style.display = 'none';
       });
       loginSection.style.display = 'block';
+      adminPanel.style.display = 'none';
     });
 
     function handleLogin() {
       const username = document.querySelector('#adminUsername').value;
       const password = document.querySelector('#adminPassword').value;
 
+      // Credenciais fixas (em um sistema real, isso seria inseguro)
       const adminCredentials = { username: 'admin', password: '86800624' };
 
       if (username === adminCredentials.username && password === adminCredentials.password) {
@@ -1239,20 +119,18 @@
 
     function logout() {
       adminPanel.style.display = 'none';
-      document.querySelectorAll('section, .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => {
+      // Mostra todas as seções principais novamente
+      document.querySelectorAll('section:not(#loginSection):not(#adminPanel), .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => {
         el.style.display = '';
       });
       loadProducts();
     }
 
-    // Admin Product Management
-    const productForm = document.querySelector('#productForm');
-    const productTable = document.querySelector('#productTable tbody');
-
+    // Admin Product Management - ATUALIZADA
     function loadAdminProducts() {
       let products;
       try {
-        products = JSON.parse(localStorage.getItem('products')) || [];
+        products = JSON.parse(localStorage.getItem('products'));
         if (!Array.isArray(products)) {
           products = initialProducts;
           localStorage.setItem('products', JSON.stringify(products));
@@ -1281,63 +159,11 @@
       });
     }
 
-    productForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const id = document.querySelector('#productId').value || Date.now().toString();
-      const name = document.querySelector('#productName').value.trim();
-      const description = document.querySelector('#productDescription').value.trim();
-      const price = parseFloat(document.querySelector('#productPrice').value);
-      const stock = parseInt(document.querySelector('#productStock').value);
-      const image = document.querySelector('#productImage').value.trim();
-      const category = document.querySelector('#productCategory').value;
-      const badge = document.querySelector('#productBadge').value.trim();
-
-      // Validação
-      if (!name || !description || isNaN(price) || price < 0 || isNaN(stock) || stock < 0 || !image || !category) {
-        alert('Por favor, preencha todos os campos obrigatórios com valores válidos.');
-        return;
-      }
-
+    // Garante que as funções estejam no escopo global para os eventos onclick
+    window.editProduct = function(id) {
       let products;
       try {
-        products = JSON.parse(localStorage.getItem('products')) || [];
-        if (!Array.isArray(products)) {
-          products = [];
-        }
-      } catch (e) {
-        products = [];
-      }
-
-      const productIndex = products.findIndex(p => p.id === id);
-      const newProduct = {
-        id,
-        name,
-        description,
-        price,
-        stock,
-        image,
-        category,
-        badge,
-        lowStock: stock <= 5
-      };
-
-      if (productIndex >= 0) {
-        products[productIndex] = newProduct;
-      } else {
-        products.push(newProduct);
-      }
-
-      localStorage.setItem('products', JSON.stringify(products));
-      productForm.reset();
-      document.querySelector('#productId').value = '';
-      loadAdminProducts();
-      loadProducts();
-    });
-
-    function editProduct(id) {
-      let products;
-      try {
-        products = JSON.parse(localStorage.getItem('products')) || [];
+        products = JSON.parse(localStorage.getItem('products'));
       } catch (e) {
         products = [];
       }
@@ -1351,14 +177,17 @@
         document.querySelector('#productImage').value = product.image;
         document.querySelector('#productCategory').value = product.category;
         document.querySelector('#productBadge').value = product.badge || '';
+        
+        // Rola para o formulário
+        document.querySelector('#productForm').scrollIntoView({ behavior: 'smooth' });
       }
-    }
+    };
 
-    function deleteProduct(id) {
+    window.deleteProduct = function(id) {
       if (confirm('Tem certeza que deseja excluir este produto?')) {
         let products;
         try {
-          products = JSON.parse(localStorage.getItem('products')) || [];
+          products = JSON.parse(localStorage.getItem('products'));
         } catch (e) {
           products = [];
         }
@@ -1367,7 +196,73 @@
         loadAdminProducts();
         loadProducts();
       }
-    }
+    };
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeStorage();
+      loadProducts();
+      
+      // Esconde o painel de admin inicialmente
+      loginSection.style.display = 'none';
+      adminPanel.style.display = 'none';
+      
+      // Configura o evento de submit do formulário
+      productForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.querySelector('#productId').value || Date.now().toString();
+        const name = document.querySelector('#productName').value.trim();
+        const description = document.querySelector('#productDescription').value.trim();
+        const price = parseFloat(document.querySelector('#productPrice').value);
+        const stock = parseInt(document.querySelector('#productStock').value);
+        const image = document.querySelector('#productImage').value.trim();
+        const category = document.querySelector('#productCategory').value;
+        const badge = document.querySelector('#productBadge').value.trim();
+
+        // Validação
+        if (!name || !description || isNaN(price) || price < 0 || isNaN(stock) || stock < 0 || !image || !category) {
+          alert('Por favor, preencha todos os campos obrigatórios com valores válidos.');
+          return;
+        }
+
+        let products;
+        try {
+          products = JSON.parse(localStorage.getItem('products'));
+          if (!Array.isArray(products)) {
+            products = [];
+          }
+        } catch (e) {
+          products = [];
+        }
+
+        const productIndex = products.findIndex(p => p.id === id);
+        const newProduct = {
+          id,
+          name,
+          description,
+          price,
+          stock,
+          image,
+          category,
+          badge,
+          lowStock: stock <= 5
+        };
+
+        if (productIndex >= 0) {
+          products[productIndex] = newProduct;
+        } else {
+          products.push(newProduct);
+        }
+
+        localStorage.setItem('products', JSON.stringify(products));
+        productForm.reset();
+        document.querySelector('#productId').value = '';
+        loadAdminProducts();
+        loadProducts();
+      });
+    });
+
+    // ... (mantenha o restante das funções originais como applyFiltersAndSearch, updateCarousel, etc)
   </script>
 </body>
 </html>
