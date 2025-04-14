@@ -995,7 +995,7 @@
 
   <!-- JavaScript -->
   <script>
-    // Produtos iniciais (carregados no localStorage apenas se vazio)
+    // Produtos iniciais
     const initialProducts = [
       {
         id: '1', name: 'Whey Protein Concentrado Growth 900g', description: 'Sabor Chocolate, 23g de proteína por dose.', price: 89.90, stock: 10, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: 'Mais Vendido', lowStock: true
@@ -1044,8 +1044,13 @@
       }
     ];
 
-    // Inicializar produtos no localStorage apenas se estiver vazio
-    if (!localStorage.getItem('products')) {
+    // Inicializar produtos no localStorage apenas se estiver vazio ou corrompido
+    try {
+      const storedProducts = JSON.parse(localStorage.getItem('products'));
+      if (!Array.isArray(storedProducts)) {
+        localStorage.setItem('products', JSON.stringify(initialProducts));
+      }
+    } catch (e) {
       localStorage.setItem('products', JSON.stringify(initialProducts));
     }
 
@@ -1070,7 +1075,18 @@
 
     // Carregar produtos dinamicamente
     function loadProducts() {
-      const products = JSON.parse(localStorage.getItem('products')) || [];
+      let products;
+      try {
+        products = JSON.parse(localStorage.getItem('products')) || [];
+        if (!Array.isArray(products)) {
+          products = initialProducts;
+          localStorage.setItem('products', JSON.stringify(products));
+        }
+      } catch (e) {
+        products = initialProducts;
+        localStorage.setItem('products', JSON.stringify(products));
+      }
+
       const wheyGrid = document.querySelector('#wheyGrid');
       const creatinaGrid = document.querySelector('#creatinaGrid');
       const preTreinoGrid = document.querySelector('#preTreinoGrid');
@@ -1095,18 +1111,20 @@
         }
       });
 
-      // Reaplicar eventos de filtro e busca após carregar produtos
       applyFiltersAndSearch();
-      // Atualizar carrossel
       updateCarousel();
     }
 
-    // Carregar produtos ao iniciar
-    loadProducts();
-
     // Loader
     window.addEventListener('load', () => {
-      document.querySelector('.loader').classList.add('hidden');
+      try {
+        loadProducts();
+      } catch (e) {
+        console.error('Erro ao carregar produtos:', e);
+      }
+      setTimeout(() => {
+        document.querySelector('.loader').classList.add('hidden');
+      }, 500);
     });
 
     // Menu Mobile
@@ -1122,8 +1140,12 @@
       const searchInput = document.querySelector('#searchInput');
       const filterButtons = document.querySelectorAll('.filters button');
 
-      searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
+      // Remover eventos anteriores para evitar múltiplos listeners
+      const newSearchInput = searchInput.cloneNode(true);
+      searchInput.parentNode.replaceChild(newSearchInput, searchInput);
+
+      newSearchInput.addEventListener('input', () => {
+        const query = newSearchInput.value.toLowerCase();
         productsElements.forEach(product => {
           const name = product.querySelector('h2').textContent.toLowerCase();
           product.style.display = name.includes(query) ? 'flex' : 'none';
@@ -1154,12 +1176,13 @@
 
     // Carousel Controls
     let currentSlide = 0;
+    let totalSlides = 0;
     const carousel = document.querySelector('#carousel');
-    let totalSlides = document.querySelectorAll('.carousel-item').length;
 
     function updateCarousel() {
       totalSlides = document.querySelectorAll('.carousel-item').length;
       if (totalSlides > 0) {
+        currentSlide = Math.max(0, Math.min(currentSlide, totalSlides - 1));
         carousel.style.transform = `translateX(-${currentSlide * 33.33}%)`;
       }
     }
@@ -1202,12 +1225,7 @@
       const username = document.querySelector('#adminUsername').value;
       const password = document.querySelector('#adminPassword').value;
 
-      // Credenciais padrão (para demonstração)
-      let adminCredentials = JSON.parse(localStorage.getItem('adminCredentials'));
-      if (!adminCredentials) {
-        adminCredentials = { username: 'admin', password: 'admin123' };
-        localStorage.setItem('adminCredentials', JSON.stringify(adminCredentials));
-      }
+      const adminCredentials = { username: 'admin', password: '86800624' };
 
       if (username === adminCredentials.username && password === adminCredentials.password) {
         loginSection.style.display = 'none';
@@ -1232,7 +1250,18 @@
     const productTable = document.querySelector('#productTable tbody');
 
     function loadAdminProducts() {
-      const products = JSON.parse(localStorage.getItem('products')) || [];
+      let products;
+      try {
+        products = JSON.parse(localStorage.getItem('products')) || [];
+        if (!Array.isArray(products)) {
+          products = initialProducts;
+          localStorage.setItem('products', JSON.stringify(products));
+        }
+      } catch (e) {
+        products = initialProducts;
+        localStorage.setItem('products', JSON.stringify(products));
+      }
+
       productTable.innerHTML = '';
       products.forEach(product => {
         const row = document.createElement('tr');
@@ -1263,15 +1292,23 @@
       const category = document.querySelector('#productCategory').value;
       const badge = document.querySelector('#productBadge').value.trim();
 
-      // Validação básica
+      // Validação
       if (!name || !description || isNaN(price) || price < 0 || isNaN(stock) || stock < 0 || !image || !category) {
         alert('Por favor, preencha todos os campos obrigatórios com valores válidos.');
         return;
       }
 
-      let products = JSON.parse(localStorage.getItem('products')) || [];
-      const productIndex = products.findIndex(p => p.id === id);
+      let products;
+      try {
+        products = JSON.parse(localStorage.getItem('products')) || [];
+        if (!Array.isArray(products)) {
+          products = [];
+        }
+      } catch (e) {
+        products = [];
+      }
 
+      const productIndex = products.findIndex(p => p.id === id);
       const newProduct = {
         id,
         name,
@@ -1298,7 +1335,12 @@
     });
 
     function editProduct(id) {
-      const products = JSON.parse(localStorage.getItem('products')) || [];
+      let products;
+      try {
+        products = JSON.parse(localStorage.getItem('products')) || [];
+      } catch (e) {
+        products = [];
+      }
       const product = products.find(p => p.id === id);
       if (product) {
         document.querySelector('#productId').value = product.id;
@@ -1314,7 +1356,12 @@
 
     function deleteProduct(id) {
       if (confirm('Tem certeza que deseja excluir este produto?')) {
-        let products = JSON.parse(localStorage.getItem('products')) || [];
+        let products;
+        try {
+          products = JSON.parse(localStorage.getItem('products')) || [];
+        } catch (e) {
+          products = [];
+        }
         products = products.filter(p => p.id !== id);
         localStorage.setItem('products', JSON.stringify(products));
         loadAdminProducts();
