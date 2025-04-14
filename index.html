@@ -1,146 +1,247 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <!-- ... (mantenha todo o head original) ... -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Fehuna Fitness - Loja de suplementos alimentares com Whey Protein, Creatina e Pré-Treinos das melhores marcas. Frete grátis em Fortaleza!">
+  <meta name="keywords" content="suplementos, whey protein, creatina, pré-treino, fitness, Fortaleza">
+  <meta name="author" content="Fehuna Fitness">
+  <title>Fehuna Fitness - Loja de Suplementos</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Ícones (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    /* (Mantenha todo o CSS original aqui) */
+  </style>
 </head>
 <body>
-  <!-- ... (mantenha toda a estrutura HTML original) ... -->
+  <!-- Loader -->
+  <div class="loader"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">Fehuna Fitness</div>
+    <ul>
+      <li><a href="#whey">Whey Protein</a></li>
+      <li><a href="#creatinas">Creatinas</a></li>
+      <li><a href="#pre-treinos">Pré-Treinos</a></li>
+      <li><a href="https://wa.me/5585999704254" target="_blank">Contato</a></li>
+      <li><a href="#" id="adminLink">Admin</a></li>
+    </ul>
+    <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+  </nav>
+
+  <!-- Login Section -->
+  <section class="login-section" id="loginSection">
+    <h2>Login do Administrador</h2>
+    <input type="text" id="adminUsername" placeholder="Usuário" required>
+    <input type="password" id="adminPassword" placeholder="Senha" required>
+    <button id="loginButton">Entrar</button>
+    <p class="error" id="loginError"></p>
+  </section>
+
+  <!-- Admin Panel -->
+  <section class="admin-panel" id="adminPanel">
+    <h2>Gerenciar Produtos</h2>
+    <form id="productForm">
+      <input type="text" id="productName" placeholder="Nome do Produto" required>
+      <input type="text" id="productDescription" placeholder="Descrição" required>
+      <input type="number" id="productPrice" placeholder="Preço (R$)" step="0.01" min="0" required>
+      <input type="number" id="productStock" placeholder="Quantidade em Estoque" min="0" required>
+      <input type="text" id="productImage" placeholder="URL da Imagem" required>
+      <select id="productCategory" required>
+        <option value="whey">Whey Protein</option>
+        <option value="creatina">Creatina</option>
+        <option value="pre-treino">Pré-Treino</option>
+      </select>
+      <input type="text" id="productBadge" placeholder="Badge (ex: Mais Vendido, Promoção)">
+      <input type="hidden" id="productId">
+      <button type="submit">Adicionar Produto</button>
+    </form>
+    <button id="logoutButton">Sair</button>
+    <table id="productTable">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Preço</th>
+          <th>Estoque</th>
+          <th>Categoria</th>
+          <th>Badge</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- (Mantenha o restante do HTML original) -->
 
   <script>
-    // Produtos iniciais (mantenha o array original)
-    
-    // Função para inicializar o localStorage
+    // Produtos iniciais
+    const initialProducts = [
+      {
+        id: '1', name: 'Whey Protein Concentrado Growth 900g', description: 'Sabor Chocolate, 23g de proteína por dose.', price: 89.90, stock: 10, image: 'https://images.unsplash.com/photo-1622495546649-0993e0a543c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', category: 'whey', badge: 'Mais Vendido', lowStock: true
+      },
+      // (Mantenha o restante dos produtos iniciais)
+    ];
+
+    // Inicialização quando o DOM estiver pronto
+    document.addEventListener('DOMContentLoaded', function() {
+      // Esconde seções de admin inicialmente
+      document.getElementById('loginSection').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'none';
+      
+      // Inicializa o localStorage
+      initializeStorage();
+      
+      // Carrega os produtos
+      loadProducts();
+      
+      // Esconde o loader após 1 segundo
+      setTimeout(function() {
+        document.querySelector('.loader').classList.add('hidden');
+      }, 1000);
+      
+      // Configura eventos
+      setupEventListeners();
+    });
+
     function initializeStorage() {
-      try {
-        const storedProducts = JSON.parse(localStorage.getItem('products'));
-        if (!Array.isArray(storedProducts)) {
-          localStorage.setItem('products', JSON.stringify(initialProducts));
-        }
-      } catch (e) {
+      if (!localStorage.getItem('products')) {
         localStorage.setItem('products', JSON.stringify(initialProducts));
       }
     }
 
-    // Função para gerar HTML de um produto - CORRIGIDA
-    function generateProductHTML(product) {
-      return `
-        <div class="product" data-category="${product.category}" data-price="${product.price}">
-          ${product.badge ? `<span class="badge">${product.badge}</span>` : ''}
-          ${product.lowStock || product.stock <= 5 ? `<span class="stock-badge">Baixo Estoque</span>` : ''}
-          <img src="${product.image}" srcset="${product.image.replace('w=600', 'w=300')} 300w, ${product.image} 600w" sizes="(max-width: 600px) 300px, 600px" alt="${product.name}" loading="lazy">
-          <div class="product-content">
-            <h2>${product.name}</h2>
-            <p>${product.description}</p>
-            <p class="price">R$ ${product.price.toFixed(2)}</p>
-          </div>
-          <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+${encodeURIComponent(product.name)}" target="_blank">
-            <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
-          </a>
-        </div>
-      `;
-    }
-
-    // Carregar produtos dinamicamente - ATUALIZADA
     function loadProducts() {
-      initializeStorage(); // Garante que o localStorage está inicializado
+      let products = JSON.parse(localStorage.getItem('products'));
       
-      let products;
-      try {
-        products = JSON.parse(localStorage.getItem('products'));
-        if (!Array.isArray(products)) {
-          products = initialProducts;
-          localStorage.setItem('products', JSON.stringify(products));
-        }
-      } catch (e) {
-        products = initialProducts;
-        localStorage.setItem('products', JSON.stringify(products));
-      }
+      const wheyGrid = document.getElementById('wheyGrid');
+      const creatinaGrid = document.getElementById('creatinaGrid');
+      const preTreinoGrid = document.getElementById('preTreinoGrid');
+      const carousel = document.getElementById('carousel');
 
-      const wheyGrid = document.querySelector('#wheyGrid');
-      const creatinaGrid = document.querySelector('#creatinaGrid');
-      const preTreinoGrid = document.querySelector('#preTreinoGrid');
-      const carousel = document.querySelector('#carousel');
-
+      // Limpa os grids
       wheyGrid.innerHTML = '';
       creatinaGrid.innerHTML = '';
       preTreinoGrid.innerHTML = '';
       carousel.innerHTML = '';
 
+      // Adiciona produtos aos grids
       products.forEach(product => {
-        const productHTML = generateProductHTML(product);
+        const productHTML = `
+          <div class="product" data-category="${product.category}" data-price="${product.price}">
+            ${product.badge ? `<span class="badge">${product.badge}</span>` : ''}
+            ${product.stock <= 5 ? `<span class="stock-badge">Baixo Estoque</span>` : ''}
+            <img src="${product.image}" alt="${product.name}" loading="lazy">
+            <div class="product-content">
+              <h2>${product.name}</h2>
+              <p>${product.description}</p>
+              <p class="price">R$ ${product.price.toFixed(2)}</p>
+            </div>
+            <a class="whatsapp-button" href="https://wa.me/5585999704254?text=Oi%2C+tenho+interesse+no+${encodeURIComponent(product.name)}" target="_blank">
+              <i class="fab fa-whatsapp"></i> Pedir via WhatsApp
+            </a>
+          </div>
+        `;
+
         if (product.category === 'whey') {
-          wheyGrid.insertAdjacentHTML('beforeend', productHTML);
+          wheyGrid.innerHTML += productHTML;
         } else if (product.category === 'creatina') {
-          creatinaGrid.insertAdjacentHTML('beforeend', productHTML);
+          creatinaGrid.innerHTML += productHTML;
         } else if (product.category === 'pre-treino') {
-          preTreinoGrid.insertAdjacentHTML('beforeend', productHTML);
+          preTreinoGrid.innerHTML += productHTML;
         }
-        if (product.badge || product.lowStock || product.stock <= 5) {
-          carousel.insertAdjacentHTML('beforeend', `<div class="carousel-item">${productHTML}</div>`);
+
+        if (product.badge || product.stock <= 5) {
+          carousel.innerHTML += `<div class="carousel-item">${productHTML}</div>`;
         }
       });
-
-      applyFiltersAndSearch();
-      updateCarousel();
     }
 
-    // Admin Login - ATUALIZADA
-    const loginSection = document.querySelector('#loginSection');
-    const adminPanel = document.querySelector('#adminPanel');
-    const adminLink = document.querySelector('#adminLink');
-    const loginError = document.querySelector('#loginError');
-
-    adminLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      // Esconde todas as seções principais
-      document.querySelectorAll('section:not(#loginSection):not(#adminPanel), .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => {
-        el.style.display = 'none';
+    function setupEventListeners() {
+      // Menu mobile
+      document.querySelector('.menu-toggle').addEventListener('click', function() {
+        document.querySelector('.navbar ul').classList.toggle('active');
       });
-      loginSection.style.display = 'block';
-      adminPanel.style.display = 'none';
-    });
+
+      // Admin link
+      document.getElementById('adminLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        hideMainContent();
+        document.getElementById('loginSection').style.display = 'block';
+      });
+
+      // Login button
+      document.getElementById('loginButton').addEventListener('click', handleLogin);
+
+      // Logout button
+      document.getElementById('logoutButton').addEventListener('click', logout);
+
+      // Product form
+      document.getElementById('productForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        saveProduct();
+      });
+    }
+
+    function hideMainContent() {
+      const sectionsToHide = [
+        '.hero', '.search-bar', '.filters', '.carousel', 
+        '.header', '.info-bar', '#whey', '#creatinas', 
+        '#pre-treinos', '.newsletter', '.footer'
+      ];
+      
+      sectionsToHide.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => el.style.display = 'none');
+      });
+    }
+
+    function showMainContent() {
+      const sectionsToShow = [
+        '.hero', '.search-bar', '.filters', '.carousel', 
+        '.header', '.info-bar', '#whey', '#creatinas', 
+        '#pre-treinos', '.newsletter', '.footer'
+      ];
+      
+      sectionsToShow.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => el.style.display = '');
+      });
+    }
 
     function handleLogin() {
-      const username = document.querySelector('#adminUsername').value;
-      const password = document.querySelector('#adminPassword').value;
+      const username = document.getElementById('adminUsername').value;
+      const password = document.getElementById('adminPassword').value;
+      const errorElement = document.getElementById('loginError');
 
-      // Credenciais fixas (em um sistema real, isso seria inseguro)
-      const adminCredentials = { username: 'admin', password: '86800624' };
-
-      if (username === adminCredentials.username && password === adminCredentials.password) {
-        loginSection.style.display = 'none';
-        adminPanel.style.display = 'block';
+      if (username === 'admin' && password === '86800624') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
         loadAdminProducts();
-        loginError.textContent = '';
+        errorElement.textContent = '';
       } else {
-        loginError.textContent = 'Usuário ou senha incorretos!';
+        errorElement.textContent = 'Usuário ou senha incorretos!';
       }
     }
 
     function logout() {
-      adminPanel.style.display = 'none';
-      // Mostra todas as seções principais novamente
-      document.querySelectorAll('section:not(#loginSection):not(#adminPanel), .product-grid, .carousel, .header, .info-bar, .filters, .search-bar, .newsletter, .footer').forEach(el => {
-        el.style.display = '';
-      });
+      document.getElementById('adminPanel').style.display = 'none';
+      showMainContent();
       loadProducts();
     }
 
-    // Admin Product Management - ATUALIZADA
     function loadAdminProducts() {
-      let products;
-      try {
-        products = JSON.parse(localStorage.getItem('products'));
-        if (!Array.isArray(products)) {
-          products = initialProducts;
-          localStorage.setItem('products', JSON.stringify(products));
-        }
-      } catch (e) {
-        products = initialProducts;
-        localStorage.setItem('products', JSON.stringify(products));
-      }
-
-      productTable.innerHTML = '';
+      const products = JSON.parse(localStorage.getItem('products'));
+      const tableBody = document.querySelector('#productTable tbody');
+      
+      tableBody.innerHTML = '';
+      
       products.forEach(product => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -151,118 +252,89 @@
           <td>${product.category}</td>
           <td>${product.badge || '-'}</td>
           <td>
-            <button class="edit" onclick="editProduct('${product.id}')">Editar</button>
-            <button onclick="deleteProduct('${product.id}')">Excluir</button>
+            <button class="edit" data-id="${product.id}">Editar</button>
+            <button class="delete" data-id="${product.id}">Excluir</button>
           </td>
         `;
-        productTable.appendChild(row);
+        tableBody.appendChild(row);
+      });
+
+      // Adiciona eventos aos botões de editar e excluir
+      document.querySelectorAll('.edit').forEach(button => {
+        button.addEventListener('click', function() {
+          editProduct(this.getAttribute('data-id'));
+        });
+      });
+
+      document.querySelectorAll('.delete').forEach(button => {
+        button.addEventListener('click', function() {
+          deleteProduct(this.getAttribute('data-id'));
+        });
       });
     }
 
-    // Garante que as funções estejam no escopo global para os eventos onclick
-    window.editProduct = function(id) {
-      let products;
-      try {
-        products = JSON.parse(localStorage.getItem('products'));
-      } catch (e) {
-        products = [];
-      }
-      const product = products.find(p => p.id === id);
-      if (product) {
-        document.querySelector('#productId').value = product.id;
-        document.querySelector('#productName').value = product.name;
-        document.querySelector('#productDescription').value = product.description;
-        document.querySelector('#productPrice').value = product.price;
-        document.querySelector('#productStock').value = product.stock;
-        document.querySelector('#productImage').value = product.image;
-        document.querySelector('#productCategory').value = product.category;
-        document.querySelector('#productBadge').value = product.badge || '';
-        
-        // Rola para o formulário
-        document.querySelector('#productForm').scrollIntoView({ behavior: 'smooth' });
-      }
-    };
+    function saveProduct() {
+      const id = document.getElementById('productId').value || Date.now().toString();
+      const name = document.getElementById('productName').value.trim();
+      const description = document.getElementById('productDescription').value.trim();
+      const price = parseFloat(document.getElementById('productPrice').value);
+      const stock = parseInt(document.getElementById('productStock').value);
+      const image = document.getElementById('productImage').value.trim();
+      const category = document.getElementById('productCategory').value;
+      const badge = document.getElementById('productBadge').value.trim();
 
-    window.deleteProduct = function(id) {
+      if (!name || !description || isNaN(price) || price < 0 || isNaN(stock) || stock < 0 || !image || !category) {
+        alert('Por favor, preencha todos os campos obrigatórios com valores válidos.');
+        return;
+      }
+
+      const products = JSON.parse(localStorage.getItem('products'));
+      const productIndex = products.findIndex(p => p.id === id);
+      const newProduct = {
+        id, name, description, price, stock, image, category, badge,
+        lowStock: stock <= 5
+      };
+
+      if (productIndex >= 0) {
+        products[productIndex] = newProduct;
+      } else {
+        products.push(newProduct);
+      }
+
+      localStorage.setItem('products', JSON.stringify(products));
+      document.getElementById('productForm').reset();
+      document.getElementById('productId').value = '';
+      loadAdminProducts();
+      loadProducts();
+    }
+
+    function editProduct(id) {
+      const products = JSON.parse(localStorage.getItem('products'));
+      const product = products.find(p => p.id === id);
+      
+      if (product) {
+        document.getElementById('productId').value = product.id;
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productDescription').value = product.description;
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productImage').value = product.image;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productBadge').value = product.badge || '';
+        
+        document.getElementById('productForm').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    function deleteProduct(id) {
       if (confirm('Tem certeza que deseja excluir este produto?')) {
-        let products;
-        try {
-          products = JSON.parse(localStorage.getItem('products'));
-        } catch (e) {
-          products = [];
-        }
+        let products = JSON.parse(localStorage.getItem('products'));
         products = products.filter(p => p.id !== id);
         localStorage.setItem('products', JSON.stringify(products));
         loadAdminProducts();
         loadProducts();
       }
-    };
-
-    // Inicialização
-    document.addEventListener('DOMContentLoaded', () => {
-      initializeStorage();
-      loadProducts();
-      
-      // Esconde o painel de admin inicialmente
-      loginSection.style.display = 'none';
-      adminPanel.style.display = 'none';
-      
-      // Configura o evento de submit do formulário
-      productForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const id = document.querySelector('#productId').value || Date.now().toString();
-        const name = document.querySelector('#productName').value.trim();
-        const description = document.querySelector('#productDescription').value.trim();
-        const price = parseFloat(document.querySelector('#productPrice').value);
-        const stock = parseInt(document.querySelector('#productStock').value);
-        const image = document.querySelector('#productImage').value.trim();
-        const category = document.querySelector('#productCategory').value;
-        const badge = document.querySelector('#productBadge').value.trim();
-
-        // Validação
-        if (!name || !description || isNaN(price) || price < 0 || isNaN(stock) || stock < 0 || !image || !category) {
-          alert('Por favor, preencha todos os campos obrigatórios com valores válidos.');
-          return;
-        }
-
-        let products;
-        try {
-          products = JSON.parse(localStorage.getItem('products'));
-          if (!Array.isArray(products)) {
-            products = [];
-          }
-        } catch (e) {
-          products = [];
-        }
-
-        const productIndex = products.findIndex(p => p.id === id);
-        const newProduct = {
-          id,
-          name,
-          description,
-          price,
-          stock,
-          image,
-          category,
-          badge,
-          lowStock: stock <= 5
-        };
-
-        if (productIndex >= 0) {
-          products[productIndex] = newProduct;
-        } else {
-          products.push(newProduct);
-        }
-
-        localStorage.setItem('products', JSON.stringify(products));
-        productForm.reset();
-        document.querySelector('#productId').value = '';
-        loadAdminProducts();
-        loadProducts();
-      });
-    });
-
-    // ... (mantenha o restante das funções originais como applyFiltersAndSearch, updateCarousel, etc)
+    }
   </script>
 </body>
 </html>
